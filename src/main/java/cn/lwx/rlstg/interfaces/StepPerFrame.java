@@ -10,6 +10,7 @@ package cn.lwx.rlstg.interfaces;
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
+
 public interface StepPerFrame {
     public void step();
 }
