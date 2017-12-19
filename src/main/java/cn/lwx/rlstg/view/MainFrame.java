@@ -13,6 +13,9 @@ import javax.swing.*;
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class MainFrame extends JFrame implements Runnable {
+
+    GamePanel panel = null;
+
     public MainFrame(){
 
     }
