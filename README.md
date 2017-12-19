@@ -1,2 +1,2 @@
-# rl-stg
+# RL-STG
 Play STG with Reinforcement Learning
