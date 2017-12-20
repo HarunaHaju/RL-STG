@@ -11,5 +11,8 @@ package cn.lwx.rlstg.gameobjects;
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class Player extends CommonObjects {
+    @Override
+    public void step() {
 
+    }
 }
