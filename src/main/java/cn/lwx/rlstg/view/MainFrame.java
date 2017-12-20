@@ -8,7 +8,7 @@ import java.awt.*;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2017/12/18
+ * Modified Date: 2017/12/20
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -86,6 +86,15 @@ public class MainFrame extends JFrame implements Runnable {
 
     @Override
     public void run() {
-
+        while (isRunning){
+            this.repaint();
+            this.panel_game.step();
+            try {
+                Thread.sleep(1000/60);
+            } catch (Exception e) {
+                isRunning = false;
+                e.printStackTrace();
+            }
+        }
     }
 }

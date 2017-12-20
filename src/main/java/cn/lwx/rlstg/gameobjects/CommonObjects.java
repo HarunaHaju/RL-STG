@@ -19,6 +19,14 @@ abstract class CommonObjects implements StepPerFrame {
     private double speed;
     private double damage;
 
+    public CommonObjects(double hp, int x, int y, double speed, double damage) {
+        this.hp = hp;
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
+        this.damage = damage;
+    }
+
     public double getHp() {
         return hp;
     }

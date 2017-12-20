@@ -1,5 +1,11 @@
 package cn.lwx.rlstg;
 
+import cn.lwx.rlstg.gameobjects.Enemy;
+import cn.lwx.rlstg.interfaces.StepPerFrame;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Package: cn.lwx.rlstg
  * Comments:
@@ -10,18 +16,24 @@ package cn.lwx.rlstg;
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
-public class GlobalManager {
+public class GlobalManager implements StepPerFrame {
     private int killScore;
     private int liveScore;
 
-    public GlobalManager(){
+    private List<Enemy> enemyList;
+
+    public static final GlobalManager GLOBAL_MANAGER = new GlobalManager();
+
+    private GlobalManager(){
         killScore = 0;
         liveScore = 0;
+        enemyList = new ArrayList<>();
     }
 
     public void reset(){
         killScore = 0;
         liveScore = 0;
+        enemyList.clear();
     }
 
     public int getKillScore() {
@@ -38,5 +50,10 @@ public class GlobalManager {
 
     public void setLiveScore(int liveScore) {
         this.liveScore = liveScore;
+    }
+
+    @Override
+    public void step() {
+        liveScore++;
     }
 }
