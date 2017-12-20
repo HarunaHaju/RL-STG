@@ -11,5 +11,32 @@ package cn.lwx.rlstg;
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class GlobalManager {
+    private int killScore;
+    private int liveScore;
 
+    public GlobalManager(){
+        killScore = 0;
+        liveScore = 0;
+    }
+
+    public void reset(){
+        killScore = 0;
+        liveScore = 0;
+    }
+
+    public int getKillScore() {
+        return killScore;
+    }
+
+    public void setKillScore(int killScore) {
+        this.killScore = killScore;
+    }
+
+    public int getLiveScore() {
+        return liveScore;
+    }
+
+    public void setLiveScore(int liveScore) {
+        this.liveScore = liveScore;
+    }
 }
