@@ -16,10 +16,18 @@ public class MainFrame extends JFrame implements Runnable {
 
     GamePanel panel = null;
 
+    JPanel panel_button = null;
+    JButton button_start = null;
+    JButton button_pause = null;
+    JButton button_shut = null;
+
     public MainFrame(){
 
     }
 
+    private void setUpUI(){
+
+    }
     @Override
     public void run() {
 

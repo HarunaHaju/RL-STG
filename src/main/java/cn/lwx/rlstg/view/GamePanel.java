@@ -1,5 +1,7 @@
 package cn.lwx.rlstg.view;
 
+import cn.lwx.rlstg.interfaces.StepPerFrame;
+
 import javax.swing.*;
 
 /**
@@ -12,5 +14,12 @@ import javax.swing.*;
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements StepPerFrame {
+
+    
+
+    @Override
+    public void step() {
+
+    }
 }
