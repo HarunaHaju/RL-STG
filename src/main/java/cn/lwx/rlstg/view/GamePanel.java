@@ -57,18 +57,22 @@ class GamePanel extends JPanel implements StepPerFrame,KeyListener {
     public void keyPressed(KeyEvent keyEvent) {
         switch (keyEvent.getKeyCode()){
             case KeyEvent.VK_UP:
+            case KeyEvent.VK_W:
                 GlobalManager.GLOBAL_MANAGER.getPlayer().moveUp();
                 this.repaint();
                 break;
             case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_S:
                 GlobalManager.GLOBAL_MANAGER.getPlayer().moveDown();
                 this.repaint();
                 break;
             case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_A:
                 GlobalManager.GLOBAL_MANAGER.getPlayer().moveLeft();
                 this.repaint();
                 break;
             case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_D:
                 GlobalManager.GLOBAL_MANAGER.getPlayer().moveRight();
                 this.repaint();
                 break;
