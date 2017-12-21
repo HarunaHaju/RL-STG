@@ -40,7 +40,7 @@ abstract class CommonObjects implements StepPerFrame {
     }
 
     public void moveRight(){
-        this.setX(this.getX()+this.getSpeed()<700?this.getX()+this.getSpeed():0);
+        this.setX(this.getX()+this.getSpeed()<450?this.getX()+this.getSpeed():450);
     }
 
     public double getHp() {

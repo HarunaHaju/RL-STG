@@ -64,5 +64,6 @@ public class GlobalManager implements StepPerFrame {
     @Override
     public void step() {
         liveScore++;
+        player.moveRight();
     }
 }

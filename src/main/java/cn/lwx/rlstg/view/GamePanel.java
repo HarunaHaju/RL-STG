@@ -45,8 +45,9 @@ class GamePanel extends JPanel implements StepPerFrame,KeyListener {
     public void paint(Graphics graphics) {
         super.paint(graphics);
 
-        graphics.drawRect(GlobalManager.GLOBAL_MANAGER.getPlayer().getX()
-                ,GlobalManager.GLOBAL_MANAGER.getPlayer().getY(),10,10);
+        graphics.drawImage(GlobalManager.GLOBAL_MANAGER.getPlayer().getImage(),
+                GlobalManager.GLOBAL_MANAGER.getPlayer().getX()
+                ,GlobalManager.GLOBAL_MANAGER.getPlayer().getY(),null);
 
         graphics.setFont(this.font);
         graphics.drawString("KillScore:"+GlobalManager.GLOBAL_MANAGER.getKillScore(),0,20);
