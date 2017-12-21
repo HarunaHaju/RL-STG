@@ -1,7 +1,12 @@
 package cn.lwx.rlstg.view;
 
+import cn.lwx.rlstg.GlobalManager;
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Package: cn.lwx.rlstg.view
@@ -49,6 +54,9 @@ public class MainFrame extends JFrame implements Runnable {
         this.setSize(480, 770);
         this.setTitle("RL_STG by lwx");
 
+        this.setFocusable(true);
+        this.addKeyListener(this.panel_game);
+
         this.setLayout(new BorderLayout());
         this.add(panel_game,BorderLayout.CENTER);
         this.add(panel_button,BorderLayout.SOUTH);
@@ -88,6 +96,7 @@ public class MainFrame extends JFrame implements Runnable {
     public void run() {
         while (isRunning){
             this.repaint();
+            this.panel_game.repaint();
             this.panel_game.step();
             try {
                 Thread.sleep(1000/60);

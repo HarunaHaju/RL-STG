@@ -5,6 +5,8 @@ import cn.lwx.rlstg.interfaces.StepPerFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Package: cn.lwx.rlstg.view
@@ -16,7 +18,7 @@ import java.awt.*;
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
-class GamePanel extends JPanel implements StepPerFrame {
+class GamePanel extends JPanel implements StepPerFrame,KeyListener {
 
     private Font font;
 
@@ -42,9 +44,46 @@ class GamePanel extends JPanel implements StepPerFrame {
     @Override
     public void paint(Graphics graphics) {
         super.paint(graphics);
-        graphics.setFont(this.font);
 
+        graphics.drawRect(GlobalManager.GLOBAL_MANAGER.getPlayer().getX()
+                ,GlobalManager.GLOBAL_MANAGER.getPlayer().getY(),10,10);
+
+        graphics.setFont(this.font);
         graphics.drawString("KillScore:"+GlobalManager.GLOBAL_MANAGER.getKillScore(),0,20);
         graphics.drawString("LiveScore:"+GlobalManager.GLOBAL_MANAGER.getLiveScore(),0,40);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+        switch (keyEvent.getKeyCode()){
+            case KeyEvent.VK_UP:
+                GlobalManager.GLOBAL_MANAGER.getPlayer().moveUp();
+                this.repaint();
+                break;
+            case KeyEvent.VK_DOWN:
+                GlobalManager.GLOBAL_MANAGER.getPlayer().moveDown();
+                this.repaint();
+                break;
+            case KeyEvent.VK_LEFT:
+                GlobalManager.GLOBAL_MANAGER.getPlayer().moveLeft();
+                this.repaint();
+                break;
+            case KeyEvent.VK_RIGHT:
+                GlobalManager.GLOBAL_MANAGER.getPlayer().moveRight();
+                this.repaint();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+
     }
 }

@@ -16,7 +16,7 @@ public class Enemy extends CommonObjects {
         super(100,50,50,5,10);
     }
 
-    public Enemy(double hp, int x, int y, double speed, double damage) {
+    public Enemy(double hp, int x, int y, int speed, double damage) {
         super(hp, x, y, speed, damage);
     }
 

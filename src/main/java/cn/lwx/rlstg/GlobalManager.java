@@ -1,6 +1,7 @@
 package cn.lwx.rlstg;
 
 import cn.lwx.rlstg.gameobjects.Enemy;
+import cn.lwx.rlstg.gameobjects.Player;
 import cn.lwx.rlstg.interfaces.StepPerFrame;
 
 import java.util.ArrayList;
@@ -20,20 +21,20 @@ public class GlobalManager implements StepPerFrame {
     private int killScore;
     private int liveScore;
 
-    private List<Enemy> enemyList;
+    private Player player;
 
     public static final GlobalManager GLOBAL_MANAGER = new GlobalManager();
 
     private GlobalManager(){
         killScore = 0;
         liveScore = 0;
-        enemyList = new ArrayList<>();
+        player = new Player();
     }
 
     public void reset(){
         killScore = 0;
         liveScore = 0;
-        enemyList.clear();
+
     }
 
     public int getKillScore() {
@@ -50,6 +51,14 @@ public class GlobalManager implements StepPerFrame {
 
     public void setLiveScore(int liveScore) {
         this.liveScore = liveScore;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     @Override
