@@ -18,11 +18,13 @@ public class Player extends CommonObjects {
     private BufferedImage image;
 
     public Player() {
-        super(100,240,640,3,10);
+        super(100,240,200,3,10);
         try {
             image = ImageIO.read(Player.class.getResource("/img/plane.png"));
             this.setWidth(image.getWidth());
             this.setHeight(image.getHeight());
+            this.setCenterX(this.getX() + this.getWidth()/2);
+            this.setCenterY(this.getY() + this.getHeight()/2);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -34,6 +36,8 @@ public class Player extends CommonObjects {
             image = ImageIO.read(Player.class.getResource("/img/plane.png"));
             this.setWidth(image.getWidth());
             this.setHeight(image.getHeight());
+            this.setCenterX(this.getX() + this.getWidth()/2);
+            this.setCenterY(this.getY() + this.getHeight()/2);
         } catch (Exception e){
             e.printStackTrace();
         }
