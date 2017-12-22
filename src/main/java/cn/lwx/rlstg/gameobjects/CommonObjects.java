@@ -7,7 +7,7 @@ import cn.lwx.rlstg.interfaces.StepPerFrame;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2017/12/21
+ * Modified Date: 2017/12/2
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -18,6 +18,8 @@ abstract class CommonObjects implements StepPerFrame {
     private int y;
     private int speed;
     private double damage;
+    private int height;
+    private int width;
 
     CommonObjects(double hp, int x, int y, int speed, double damage) {
         this.hp = hp;
@@ -47,39 +49,55 @@ abstract class CommonObjects implements StepPerFrame {
         return hp;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public double getDamage() {
-        return damage;
-    }
-
     public void setHp(double hp) {
         this.hp = hp;
+    }
+
+    public int getX() {
+        return x;
     }
 
     public void setX(int x) {
         this.x = x;
     }
 
+    public int getY() {
+        return y;
+    }
+
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
     public void setSpeed(int speed) {
         this.speed = speed;
     }
 
+    public double getDamage() {
+        return damage;
+    }
+
     public void setDamage(double damage) {
         this.damage = damage;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 }

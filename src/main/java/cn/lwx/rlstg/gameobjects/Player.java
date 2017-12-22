@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2017/12/21
+ * Modified Date: 2017/12/22
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -18,9 +18,11 @@ public class Player extends CommonObjects {
     private BufferedImage image;
 
     public Player() {
-        super(100,100,50,3,10);
+        super(100,240,640,3,10);
         try {
             image = ImageIO.read(Player.class.getResource("/img/plane.png"));
+            this.setWidth(image.getWidth());
+            this.setHeight(image.getHeight());
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -30,6 +32,8 @@ public class Player extends CommonObjects {
         super(hp,x,y,speed,damage);
         try {
             image = ImageIO.read(Player.class.getResource("/img/plane.png"));
+            this.setWidth(image.getWidth());
+            this.setHeight(image.getHeight());
         } catch (Exception e){
             e.printStackTrace();
         }
