@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/19
- * Modified Date: 2017/12/20
+ * Modified Date: 2017/12/21
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -48,6 +48,10 @@ class GamePanel extends JPanel implements StepPerFrame,KeyListener {
         graphics.drawImage(GlobalManager.GLOBAL_MANAGER.getPlayer().getImage(),
                 GlobalManager.GLOBAL_MANAGER.getPlayer().getX()
                 ,GlobalManager.GLOBAL_MANAGER.getPlayer().getY(),null);
+
+        graphics.drawImage(GlobalManager.GLOBAL_MANAGER.getEnemy().getImage(),
+                GlobalManager.GLOBAL_MANAGER.getEnemy().getX()
+                ,GlobalManager.GLOBAL_MANAGER.getEnemy().getY(),null);
 
         graphics.setFont(this.font);
         graphics.drawString("KillScore:"+GlobalManager.GLOBAL_MANAGER.getKillScore(),0,20);
