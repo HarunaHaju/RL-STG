@@ -49,10 +49,15 @@ public class Player extends CommonObjects {
         this.setY(50);
         this.setSpeed(5);
         this.setDamage(10);
+        this.setCenterX(this.getX() + this.getWidth()/2);
+        this.setCenterY(this.getY() + this.getHeight()/2);
     }
 
     public BufferedImage getImage() {
-        return image;
+        if(image.getHeight()>0&&image.getWidth()>0)
+            return image;
+        else
+            return null;
     }
 
     @Override
