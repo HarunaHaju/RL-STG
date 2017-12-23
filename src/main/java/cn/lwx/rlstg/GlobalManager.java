@@ -22,7 +22,7 @@ public class GlobalManager implements StepPerFrame {
     private int liveScore;
 
     private Player player;
-    private List enemys;
+    private ArrayList<Enemy> enemies;
 
     public static final GlobalManager GLOBAL_MANAGER = new GlobalManager();
 
@@ -30,7 +30,7 @@ public class GlobalManager implements StepPerFrame {
         killScore = 0;
         liveScore = 0;
         player = new Player();
-        enemys = new ArrayList<Enemy>();
+        enemies = new ArrayList<>();
     }
 
     public void reset(){
@@ -63,8 +63,8 @@ public class GlobalManager implements StepPerFrame {
         this.player = player;
     }
 
-    public List getEnemys() {
-        return enemys;
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 
     @Override

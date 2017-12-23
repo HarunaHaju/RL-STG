@@ -1,6 +1,7 @@
 package cn.lwx.rlstg.view;
 
 import cn.lwx.rlstg.GlobalManager;
+import cn.lwx.rlstg.gameobjects.Enemy;
 import cn.lwx.rlstg.interfaces.StepPerFrame;
 
 import javax.swing.*;
@@ -46,12 +47,14 @@ class GamePanel extends JPanel implements StepPerFrame,KeyListener {
         super.paint(graphics);
 
         graphics.drawImage(GlobalManager.GLOBAL_MANAGER.getPlayer().getImage(),
-                GlobalManager.GLOBAL_MANAGER.getPlayer().getX()
-                ,GlobalManager.GLOBAL_MANAGER.getPlayer().getY(),null);
+                GlobalManager.GLOBAL_MANAGER.getPlayer().getX(),
+                GlobalManager.GLOBAL_MANAGER.getPlayer().getY(),null);
 
-        graphics.drawImage(GlobalManager.GLOBAL_MANAGER.getEnemy().getImage(),
-                GlobalManager.GLOBAL_MANAGER.getEnemy().getX()
-                ,GlobalManager.GLOBAL_MANAGER.getEnemy().getY(),null);
+        for(int i = 0;i<GlobalManager.GLOBAL_MANAGER.getEnemies().size();i++){
+            graphics.drawImage(GlobalManager.GLOBAL_MANAGER.getEnemies().get(i).getImage(),
+                    GlobalManager.GLOBAL_MANAGER.getEnemies().get(i).getX(),
+                    GlobalManager.GLOBAL_MANAGER.getEnemies().get(i).getY(),null);
+        }
 
         graphics.setFont(this.font);
         graphics.drawString("KillScore:"+GlobalManager.GLOBAL_MANAGER.getKillScore(),0,20);
