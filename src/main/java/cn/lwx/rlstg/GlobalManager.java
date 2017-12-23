@@ -12,7 +12,7 @@ import java.util.List;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/20
- * Modified Date: 2017/12/21
+ * Modified Date: 2017/12/23
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -22,7 +22,7 @@ public class GlobalManager implements StepPerFrame {
     private int liveScore;
 
     private Player player;
-    private Enemy enemy;
+    private List enemys;
 
     public static final GlobalManager GLOBAL_MANAGER = new GlobalManager();
 
@@ -30,7 +30,7 @@ public class GlobalManager implements StepPerFrame {
         killScore = 0;
         liveScore = 0;
         player = new Player();
-        enemy = new Enemy();
+        enemys = new ArrayList<Enemy>();
     }
 
     public void reset(){
@@ -63,13 +63,12 @@ public class GlobalManager implements StepPerFrame {
         this.player = player;
     }
 
-    public Enemy getEnemy() {
-        return enemy;
+    public List getEnemys() {
+        return enemys;
     }
 
     @Override
     public void step() {
         liveScore++;
-        enemy.moveDown();
     }
 }
