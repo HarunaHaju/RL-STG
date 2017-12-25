@@ -14,7 +14,7 @@ import java.awt.event.KeyListener;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/19
- * Modified Date: 2017/12/21
+ * Modified Date: 2017/12/25
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -50,11 +50,13 @@ class GamePanel extends JPanel implements StepPerFrame,KeyListener {
                 GlobalManager.GLOBAL_MANAGER.getPlayer().getX(),
                 GlobalManager.GLOBAL_MANAGER.getPlayer().getY(),null);
 
-        for(int i = 0;i<GlobalManager.GLOBAL_MANAGER.getEnemies().size();i++){
-            graphics.drawImage(GlobalManager.GLOBAL_MANAGER.getEnemies().get(i).getImage(),
-                    GlobalManager.GLOBAL_MANAGER.getEnemies().get(i).getX(),
-                    GlobalManager.GLOBAL_MANAGER.getEnemies().get(i).getY(),null);
-        }
+        GlobalManager.GLOBAL_MANAGER.getEnemies().forEach(enemy ->
+            graphics.drawImage(enemy.getImage(),enemy.getX(),enemy.getY(),null)
+        );
+
+        GlobalManager.GLOBAL_MANAGER.getBullets().forEach(bullet ->
+                graphics.drawImage(bullet.getImage(),bullet.getX(),bullet.getY(),null)
+        );
 
         graphics.setFont(this.font);
         graphics.drawString("KillScore:"+GlobalManager.GLOBAL_MANAGER.getKillScore(),0,20);
@@ -83,6 +85,9 @@ class GamePanel extends JPanel implements StepPerFrame,KeyListener {
             case KeyEvent.VK_D:
                 GlobalManager.GLOBAL_MANAGER.getPlayer().moveRight();
                 this.repaint();
+                break;
+            case KeyEvent.VK_J:
+                GlobalManager.GLOBAL_MANAGER.getPlayer().shot();
                 break;
             default:
                 break;
