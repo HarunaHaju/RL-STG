@@ -26,8 +26,6 @@ public class Enemy extends CommonObjects {
             image = ImageIO.read(Enemy.class.getResource("/img/enemy.png"));
             this.setWidth(image.getWidth());
             this.setHeight(image.getHeight());
-            this.setCenterX(this.getX() + this.getWidth()/2);
-            this.setCenterY(this.getY() + this.getHeight()/2);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -39,19 +37,14 @@ public class Enemy extends CommonObjects {
             image = ImageIO.read(Enemy.class.getResource("/img/enemy.png"));
             this.setWidth(image.getWidth());
             this.setHeight(image.getHeight());
-            this.setCenterX(this.getX() + this.getWidth()/2);
-            this.setCenterY(this.getY() + this.getHeight()/2);
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public BufferedImage getImage() {
-        return image;
-    }
-
+    @Override
     public void shot(){
-        Bullet bullet = new Bullet(this.getCenterX(),this.getY()
+        Bullet bullet = new Bullet(this.getX() + this.getWidth()/2,this.getY()
                 ,this.getSpeed(),this.getDamage(),Bullet.PARENTS_ENEMY);
         GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
     }
@@ -59,5 +52,12 @@ public class Enemy extends CommonObjects {
     @Override
     public void step() {
 
+    }
+
+    public BufferedImage getImage() {
+        if(image.getHeight()>0&&image.getWidth()>0)
+            return image;
+        else
+            return null;
     }
 }

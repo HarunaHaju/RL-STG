@@ -2,12 +2,14 @@ package cn.lwx.rlstg.gameobjects;
 
 import cn.lwx.rlstg.interfaces.StepPerFrame;
 
+import java.awt.image.BufferedImage;
+
 /**
  * Package: cn.lwx.rlstg.gameobjects
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2017/12/22
+ * Modified Date: 2017/12/25
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -20,8 +22,6 @@ abstract class CommonObjects implements StepPerFrame {
     private double damage;
     private int height;
     private int width;
-    private int centerX;
-    private int centerY;
 
     CommonObjects(double hp, int x, int y, int speed, double damage) {
         this.hp = hp;
@@ -56,6 +56,8 @@ abstract class CommonObjects implements StepPerFrame {
             return;
         this.setX(x + speed<480 - width?x + speed:480 - width);
     }
+
+    public abstract void shot();
 
     public double getHp() {
         return hp;
@@ -111,21 +113,5 @@ abstract class CommonObjects implements StepPerFrame {
 
     public void setWidth(int width) {
         this.width = width;
-    }
-
-    public int getCenterX() {
-        return centerX;
-    }
-
-    void setCenterX(int centerX) {
-        this.centerX = centerX;
-    }
-
-    public int getCenterY() {
-        return centerY;
-    }
-
-    public void setCenterY(int centerY) {
-        this.centerY = centerY;
     }
 }

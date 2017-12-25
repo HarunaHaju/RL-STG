@@ -1,5 +1,7 @@
 package cn.lwx.rlstg.gameobjects;
 
+import cn.lwx.rlstg.GlobalManager;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
@@ -8,7 +10,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2017/12/24
+ * Modified Date: 2017/12/25
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -20,11 +22,9 @@ public class Player extends CommonObjects {
     public Player() {
         super(100,240,200,3,10);
         try {
-            image = ImageIO.read(Player.class.getResource("/img/plane.png"));
+            this.image = ImageIO.read(Player.class.getResource("/img/plane.png"));
             this.setWidth(image.getWidth());
             this.setHeight(image.getHeight());
-            this.setCenterX(this.getX() + this.getWidth()/2);
-            this.setCenterY(this.getY() + this.getHeight()/2);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -36,8 +36,6 @@ public class Player extends CommonObjects {
             image = ImageIO.read(Player.class.getResource("/img/plane.png"));
             this.setWidth(image.getWidth());
             this.setHeight(image.getHeight());
-            this.setCenterX(this.getX() + this.getWidth()/2);
-            this.setCenterY(this.getY() + this.getHeight()/2);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -49,11 +47,17 @@ public class Player extends CommonObjects {
         this.setY(50);
         this.setSpeed(5);
         this.setDamage(10);
-        this.setCenterX(this.getX() + this.getWidth()/2);
-        this.setCenterY(this.getY() + this.getHeight()/2);
     }
 
+    @Override
     public void shot(){
+        Bullet bullet = new Bullet(this.getX() + this.getWidth()/2,this.getY()
+                ,this.getSpeed(),this.getDamage(),Bullet.PARENTS_PLAYER);
+        GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
+    }
+
+    @Override
+    public void step() {
 
     }
 
@@ -62,10 +66,5 @@ public class Player extends CommonObjects {
             return image;
         else
             return null;
-    }
-
-    @Override
-    public void step() {
-
     }
 }
