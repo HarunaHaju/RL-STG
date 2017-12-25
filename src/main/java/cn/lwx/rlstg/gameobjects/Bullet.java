@@ -25,8 +25,6 @@ public class Bullet implements StepPerFrame {
     private double damage;
     private int height;
     private int width;
-    private int centerX;
-    private int centerY;
     private int state;
 
     public static final int PARENTS_PLAYER = 1;
@@ -35,7 +33,6 @@ public class Bullet implements StepPerFrame {
     public Bullet(int x,int y,int speed,double damage,int state) {
         this.x = x;
         this.y = y;
-        this.centerY = y;
         this.speed = speed;
         this.damage = damage;
         this.state = state;
@@ -53,17 +50,15 @@ public class Bullet implements StepPerFrame {
         switch (this.state){
             case PARENTS_PLAYER:
                 y -= speed;
-                centerY -= speed;
-                if (centerY < 0){
-                    System.out.println(centerY);
-                    GlobalManager.GLOBAL_MANAGER.getBullets().remove(this);
-                    break;
-                }
                 break;
             case PARENTS_ENEMY:
+                y += speed;
                 break;
             default:
                 break;
+        }
+        if (y - height < 0){
+            GlobalManager.GLOBAL_MANAGER.getBullets().remove(this);
         }
     }
 
@@ -121,21 +116,5 @@ public class Bullet implements StepPerFrame {
 
     public void setWidth(int width) {
         this.width = width;
-    }
-
-    public int getCenterX() {
-        return centerX;
-    }
-
-    public void setCenterX(int centerX) {
-        this.centerX = centerX;
-    }
-
-    public int getCenterY() {
-        return centerY;
-    }
-
-    public void setCenterY(int centerY) {
-        this.centerY = centerY;
     }
 }
