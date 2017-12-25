@@ -63,11 +63,10 @@ public class Bullet implements StepPerFrame {
     }
 
     public BufferedImage getImage() {
-        return image;
-    }
-
-    public void setImage(BufferedImage image) {
-        this.image = image;
+        if(image.getHeight()>0&&image.getWidth()>0)
+            return image;
+        else
+            return null;
     }
 
     public int getX() {

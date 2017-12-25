@@ -5,8 +5,6 @@ import cn.lwx.rlstg.gameobjects.Enemy;
 import cn.lwx.rlstg.gameobjects.Player;
 import cn.lwx.rlstg.interfaces.StepPerFrame;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -43,6 +41,24 @@ public class GlobalManager implements StepPerFrame {
         player.reset();
     }
 
+    private void randomGenerateEnemy(){
+
+    }
+
+    private void judgeGetShot(){
+
+    }
+
+    @Override
+    public void step() {
+        judgeGetShot();
+        randomGenerateEnemy();
+        liveScore++;
+        player.step();
+        enemies.forEach(Enemy::step);
+        bullets.forEach(Bullet::step);
+    }
+
     public int getKillScore() {
         return killScore;
     }
@@ -73,13 +89,5 @@ public class GlobalManager implements StepPerFrame {
 
     public ConcurrentLinkedQueue<Bullet> getBullets() {
         return bullets;
-    }
-
-    @Override
-    public void step() {
-        liveScore++;
-        player.step();
-        enemies.forEach(Enemy::step);
-        bullets.forEach(Bullet::step);
     }
 }
