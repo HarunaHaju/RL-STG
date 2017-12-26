@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2017/12/25
+ * Modified Date: 2017/12/26
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -48,7 +48,7 @@ abstract class CommonObjects implements StepPerFrame {
     public void moveLeft(){
         if(width == 0)
             return;
-        this.setX(x - speed>width + 1?x - speed:width + 1);
+        this.setX(x - speed>0?x - speed:0);
     }
 
     public void moveRight(){
