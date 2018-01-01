@@ -1,5 +1,6 @@
 package cn.lwx.rlstg.gameobjects;
 
+import cn.lwx.rlstg.GlobalManager;
 import cn.lwx.rlstg.interfaces.StepPerFrame;
 
 import java.awt.image.BufferedImage;
@@ -9,7 +10,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2017/12/26
+ * Modified Date: 2018/01/01
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -22,6 +23,7 @@ abstract class CommonObjects implements StepPerFrame {
     private double damage;
     private int height;
     private int width;
+    private boolean isAlive;
 
     CommonObjects(double hp, int x, int y, int speed, double damage) {
         this.hp = hp;
@@ -31,6 +33,17 @@ abstract class CommonObjects implements StepPerFrame {
         this.damage = damage;
         this.width = 0;
         this.height = 0;
+        this.isAlive = true;
+    }
+
+    public void judgeGetShot(){
+        GlobalManager.GLOBAL_MANAGER.getBullets().forEach(bullet -> {
+            if(bullet.getX() + bullet.getWidth() >= this.x &&
+                    bullet.getX() <= this.x + this.getWidth()&&
+                    bullet.getY() + bullet.getHeight() >= this.y&&
+                    bullet.getY() <= this.y + this.getHeight())
+                isAlive = false;
+        });
     }
 
     public void moveUp(){

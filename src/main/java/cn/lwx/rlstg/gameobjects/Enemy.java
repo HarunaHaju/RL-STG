@@ -11,7 +11,7 @@ import java.util.Random;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2017/12/25
+ * Modified Date: 2018/01/01
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -51,7 +51,7 @@ public class Enemy extends CommonObjects {
 
     @Override
     public void step() {
-
+        judgeGetShot();
     }
 
     public BufferedImage getImage() {
