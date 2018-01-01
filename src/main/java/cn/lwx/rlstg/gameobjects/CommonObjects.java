@@ -127,4 +127,12 @@ abstract class CommonObjects implements StepPerFrame {
     public void setWidth(int width) {
         this.width = width;
     }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
 }
