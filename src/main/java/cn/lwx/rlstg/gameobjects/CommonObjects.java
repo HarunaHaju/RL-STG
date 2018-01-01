@@ -38,9 +38,9 @@ abstract class CommonObjects implements StepPerFrame {
 
     public void judgeGetShot(){
         GlobalManager.GLOBAL_MANAGER.getBullets().forEach(bullet -> {
-            if(bullet.getX() + bullet.getWidth() >= this.x &&
+            if(bullet.getX() >= this.x &&
                     bullet.getX() <= this.x + this.getWidth()&&
-                    bullet.getY() + bullet.getHeight() >= this.y&&
+                    bullet.getY() >= this.y&&
                     bullet.getY() <= this.y + this.getHeight())
                 isAlive = false;
         });
