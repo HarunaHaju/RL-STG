@@ -5,6 +5,8 @@ import cn.lwx.rlstg.gameobjects.Enemy;
 import cn.lwx.rlstg.gameobjects.Player;
 import cn.lwx.rlstg.interfaces.StepPerFrame;
 
+import java.util.Iterator;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -12,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/20
- * Modified Date: 2017/12/25
+ * Modified Date: 2018/01/01
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -42,21 +44,30 @@ public class GlobalManager implements StepPerFrame {
     }
 
     private void randomGenerateEnemy(){
-
+        if(enemies.size()<10){
+            int newEnemyCount = (int)(Math.random() * (10 - enemies.size()));
+            for (int i = 0; i < newEnemyCount; i++) {
+                Enemy enemy = new Enemy();
+                enemies.add(enemy);
+            }
+        }
     }
 
-    private void judgeGetShot(){
-
+    private void removeDeadEnemies(){
+        enemies.forEach(enemy -> {
+            if(!enemy.isAlive())
+                enemies.remove(enemy);
+        });
     }
 
     @Override
     public void step() {
-        judgeGetShot();
         randomGenerateEnemy();
         liveScore++;
         player.step();
-        enemies.forEach(Enemy::step);
         bullets.forEach(Bullet::step);
+        enemies.forEach(Enemy::step);
+        removeDeadEnemies();
     }
 
     public int getKillScore() {
