@@ -21,8 +21,8 @@ public class Enemy extends CommonObjects {
     private BufferedImage image;
 
     public Enemy(){
-        //CommonObjects(double hp, int x, int y, int speed, double damage)
         super(100,(int)(Math.random()*300),50,5,10);
+        this.setFlag(CommonObjects.ENEMY);
         try {
             image = ImageIO.read(Enemy.class.getResource("/img/enemy.png"));
             this.setWidth(image.getWidth());
@@ -34,6 +34,7 @@ public class Enemy extends CommonObjects {
 
     public Enemy(double hp, int x, int y, int speed, double damage) {
         super(hp, x, y, speed, damage);
+        this.setFlag(CommonObjects.ENEMY);
         try {
             image = ImageIO.read(Enemy.class.getResource("/img/enemy.png"));
             this.setWidth(image.getWidth());

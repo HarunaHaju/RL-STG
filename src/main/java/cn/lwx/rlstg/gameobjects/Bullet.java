@@ -5,14 +5,13 @@ import cn.lwx.rlstg.interfaces.StepPerFrame;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.util.Iterator;
 
 /**
  * Package: cn.lwx.rlstg.gameobjects
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/24
- * Modified Date: 2017/12/25
+ * Modified Date: 2018/01/11
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -25,17 +24,17 @@ public class Bullet implements StepPerFrame {
     private double damage;
     private int height;
     private int width;
-    private int state;
+    private int flag;
 
     public static final int PARENTS_PLAYER = 1;
     public static final int PARENTS_ENEMY = 2;
 
-    public Bullet(int x,int y,int speed,double damage,int state) {
+    public Bullet(int x,int y,int speed,double damage,int flag) {
         this.x = x;
         this.y = y;
         this.speed = speed;
         this.damage = damage;
-        this.state = state;
+        this.flag = flag;
         try {
             image = ImageIO.read(Bullet.class.getResource("/img/bullet.png"));
             this.width = image.getWidth();
@@ -47,7 +46,7 @@ public class Bullet implements StepPerFrame {
 
     @Override
     public void step() {
-        switch (this.state){
+        switch (this.flag){
             case PARENTS_PLAYER:
                 y -= speed;
                 break;
@@ -115,5 +114,9 @@ public class Bullet implements StepPerFrame {
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public int getFlag() {
+        return flag;
     }
 }

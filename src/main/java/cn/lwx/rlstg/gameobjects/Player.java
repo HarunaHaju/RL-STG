@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/01/01
+ * Modified Date: 2018/01/11
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -21,6 +21,7 @@ public class Player extends CommonObjects {
 
     public Player() {
         super(100,240,200,3,10);
+        this.setFlag(CommonObjects.PLAYER);
         try {
             this.image = ImageIO.read(Player.class.getResource("/img/plane.png"));
             this.setWidth(image.getWidth());
@@ -32,6 +33,7 @@ public class Player extends CommonObjects {
 
     public Player(double hp, int x, int y, int speed, double damage) {
         super(hp,x,y,speed,damage);
+        this.setFlag(CommonObjects.PLAYER);
         try {
             image = ImageIO.read(Player.class.getResource("/img/plane.png"));
             this.setWidth(image.getWidth());
@@ -58,7 +60,8 @@ public class Player extends CommonObjects {
 
     @Override
     public void step() {
-        judgeGetShot();
+
+        //judgeGetShot();
     }
 
     public BufferedImage getImage() {

@@ -24,9 +24,13 @@ abstract class CommonObjects implements StepPerFrame {
     private int height;
     private int width;
     private boolean isAlive;
+    private int flag;
+
+    public final static int PLAYER = 0;
+    public final static int ENEMY = 1;
+
     CommonObjects(double hp, int x, int y, int speed, double damage) {
         this.hp = hp;
-
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -137,5 +141,13 @@ abstract class CommonObjects implements StepPerFrame {
 
     public void setAlive(boolean alive) {
         isAlive = alive;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }
