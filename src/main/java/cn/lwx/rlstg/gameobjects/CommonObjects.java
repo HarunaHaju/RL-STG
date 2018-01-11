@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/01/01
+ * Modified Date: 2018/01/11
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -24,9 +24,9 @@ abstract class CommonObjects implements StepPerFrame {
     private int height;
     private int width;
     private boolean isAlive;
-
     CommonObjects(double hp, int x, int y, int speed, double damage) {
         this.hp = hp;
+
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -38,11 +38,14 @@ abstract class CommonObjects implements StepPerFrame {
 
     public void judgeGetShot(){
         GlobalManager.GLOBAL_MANAGER.getBullets().forEach(bullet -> {
-            if(bullet.getX() >= this.x &&
+            if(bullet.getX() + bullet.getWidth() >= this.x &&
                     bullet.getX() <= this.x + this.getWidth()&&
-                    bullet.getY() >= this.y&&
+                    bullet.getY() +bullet.getHeight() >= this.y&&
                     bullet.getY() <= this.y + this.getHeight())
+            {
+                GlobalManager.GLOBAL_MANAGER.getBullets().remove(bullet);
                 isAlive = false;
+            }
         });
     }
 
