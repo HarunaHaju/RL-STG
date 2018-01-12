@@ -47,14 +47,24 @@ public class Enemy extends CommonObjects {
 
     @Override
     public void shot(){
-        double rad = 2 * Math.PI * ((Math.random()*180) / 360);
-
-        int offsetX = (int) (Math.cos(rad) * this.getSpeed());
-        int offsetY = (int) (Math.sin(rad) * this.getSpeed());
-
-        Bullet bullet = new Bullet(this.getX() + this.getWidth()/2,this.getY()
-                ,this.getSpeed(),this.getDamage(),Bullet.PARENTS_ENEMY,offsetX,offsetY);
-        GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
+        if(Math.random()<0.9) {
+            double rad = 2 * Math.PI * ((Math.random() * 110 + 40) / 360);
+            int offsetX = (int) (Math.cos(rad) * this.getSpeed());
+            int offsetY = (int) (Math.sin(rad) * this.getSpeed());
+            Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()
+                    , this.getSpeed(), this.getDamage(), Bullet.PARENTS_ENEMY, offsetX, offsetY);
+            GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
+        }else{
+            for (int i = 0;i<10;i++){
+                double rad = 2 * Math.PI * ((i*(150-40)/10+40) / 360);
+                int offsetX = (int) (Math.cos(rad) * this.getSpeed());
+                int offsetY = (int) (Math.sin(rad) * this.getSpeed());
+                Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()
+                        , this.getSpeed(), this.getDamage(), Bullet.PARENTS_ENEMY, offsetX, offsetY);
+                GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
+            }
+            count = -39;//CD
+        }
     }
 
     @Override
