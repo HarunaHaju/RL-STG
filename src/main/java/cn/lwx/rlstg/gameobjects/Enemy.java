@@ -63,7 +63,7 @@ public class Enemy extends CommonObjects {
                         , this.getSpeed(), this.getDamage(), Bullet.PARENTS_ENEMY, offsetX, offsetY);
                 GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
             }
-            count = -39;//CD
+            count = -49;//CD
         }
     }
 
@@ -74,7 +74,7 @@ public class Enemy extends CommonObjects {
             shot();
         }
         ++count;
-        count %= 40;
+        count %= 50;
     }
 
     public BufferedImage getImage() {
