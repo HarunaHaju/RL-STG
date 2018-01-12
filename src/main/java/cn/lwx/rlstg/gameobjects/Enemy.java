@@ -11,7 +11,7 @@ import java.util.Random;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/01/11
+ * Modified Date: 2018/01/12
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -19,6 +19,7 @@ import java.util.Random;
 public class Enemy extends CommonObjects {
 
     private BufferedImage image;
+    private int count = 0;
 
     public Enemy(){
         super(100,(int)(Math.random()*300),50,5,10);
@@ -46,14 +47,24 @@ public class Enemy extends CommonObjects {
 
     @Override
     public void shot(){
+        double rad = 2 * Math.PI * ((Math.random()*180) / 360);
+
+        int offsetX = (int) (Math.cos(rad) * this.getSpeed());
+        int offsetY = (int) (Math.sin(rad) * this.getSpeed());
+
         Bullet bullet = new Bullet(this.getX() + this.getWidth()/2,this.getY()
-                ,this.getSpeed(),this.getDamage(),Bullet.PARENTS_ENEMY);
+                ,this.getSpeed(),this.getDamage(),Bullet.PARENTS_ENEMY,offsetX,offsetY);
         GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
     }
 
     @Override
     public void step() {
         judgeGetShot();
+        if (count == 0) {
+            shot();
+        }
+        ++count;
+        count %= 40;
     }
 
     public BufferedImage getImage() {

@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/24
- * Modified Date: 2018/01/11
+ * Modified Date: 2018/01/12
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -25,6 +25,8 @@ public class Bullet implements StepPerFrame {
     private int height;
     private int width;
     private int flag;
+    private int offsetX;
+    private int offsetY;
 
     public static final int PARENTS_PLAYER = 1;
     public static final int PARENTS_ENEMY = 2;
@@ -44,6 +46,23 @@ public class Bullet implements StepPerFrame {
         }
     }
 
+    public Bullet(int x,int y,int speed,double damage,int flag,int offsetX,int offsetY) {
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
+        this.damage = damage;
+        this.flag = flag;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        try {
+            image = ImageIO.read(Bullet.class.getResource("/img/bullet.png"));
+            this.width = image.getWidth();
+            this.height = image.getHeight();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void step() {
         switch (this.flag){
@@ -51,7 +70,8 @@ public class Bullet implements StepPerFrame {
                 y -= speed;
                 break;
             case PARENTS_ENEMY:
-                y += speed;
+                y += offsetY;
+                x += offsetX;
                 break;
             default:
                 break;
