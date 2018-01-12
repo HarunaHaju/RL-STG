@@ -47,7 +47,7 @@ public class Enemy extends CommonObjects {
 
     @Override
     public void shot(){
-        if(Math.random()<0.9) {
+        if(Math.random()<0.95) {
             double rad = 2 * Math.PI * ((Math.random() * 110 + 40) / 360);
             int offsetX = (int) (Math.cos(rad) * this.getSpeed());
             int offsetY = (int) (Math.sin(rad) * this.getSpeed());
@@ -56,7 +56,7 @@ public class Enemy extends CommonObjects {
             GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
         }else{
             for (int i = 0;i<10;i++){
-                double rad = 2 * Math.PI * ((i*(150-40)/10+40) / 360);
+                double rad = 2 * Math.PI * ((double)(i*(150-40)/10+40) / 360);
                 int offsetX = (int) (Math.cos(rad) * this.getSpeed());
                 int offsetY = (int) (Math.sin(rad) * this.getSpeed());
                 Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()
