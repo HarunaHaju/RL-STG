@@ -46,20 +46,26 @@ abstract class CommonObjects implements StepPerFrame {
                 case PLAYER:
                     if (bullet.getFlag() == Bullet.PARENTS_PLAYER)
                         return;
+                    if(bullet.getX() + bullet.getWidth() >= this.x + this.getWidth()/4 &&
+                            bullet.getX() <= this.x + this.getWidth()/4*3&&
+                            bullet.getY() +bullet.getHeight() >= this.y+ this.getHeight()/4&&
+                            bullet.getY() <= this.y + this.getHeight()/4*3)
+                    {
+                        GlobalManager.GLOBAL_MANAGER.getBullets().remove(bullet);
+                        isAlive = false;
+                    }
                 case ENEMY:
                     if (bullet.getFlag() == Bullet.PARENTS_ENEMY)
                         return;
+                    if(bullet.getX() + bullet.getWidth() >= this.x &&
+                            bullet.getX() <= this.x + this.getWidth()&&
+                            bullet.getY() +bullet.getHeight() >= this.y&&
+                            bullet.getY() <= this.y + this.getHeight())
+                    {
+                        GlobalManager.GLOBAL_MANAGER.getBullets().remove(bullet);
+                        isAlive = false;
+                    }
                     break;
-                default:
-                    return;
-            }
-            if(bullet.getX() + bullet.getWidth() >= this.x &&
-                    bullet.getX() <= this.x + this.getWidth()&&
-                    bullet.getY() +bullet.getHeight() >= this.y&&
-                    bullet.getY() <= this.y + this.getHeight())
-            {
-                GlobalManager.GLOBAL_MANAGER.getBullets().remove(bullet);
-                isAlive = false;
             }
         });
     }

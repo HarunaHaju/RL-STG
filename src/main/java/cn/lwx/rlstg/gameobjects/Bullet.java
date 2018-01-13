@@ -76,7 +76,7 @@ public class Bullet implements StepPerFrame {
             default:
                 break;
         }
-        if (y - height < 0){
+        if (y + height < 0 || x + width<0||x-width>480||y-height>700){
             GlobalManager.GLOBAL_MANAGER.getBullets().remove(this);
         }
     }

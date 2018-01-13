@@ -11,7 +11,7 @@ import java.util.Random;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/01/12
+ * Modified Date: 2018/01/13
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -48,22 +48,19 @@ public class Enemy extends CommonObjects {
     @Override
     public void shot(){
         if(Math.random()<0.95) {
-            double rad = 2 * Math.PI * ((Math.random() * 110 + 40) / 360);
-            int offsetX = (int) (Math.cos(rad) * this.getSpeed());
-            int offsetY = (int) (Math.sin(rad) * this.getSpeed());
-            Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()
-                    , this.getSpeed(), this.getDamage(), Bullet.PARENTS_ENEMY, offsetX, offsetY);
+            Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()+ this.getHeight()
+                    , this.getSpeed(), this.getDamage(), Bullet.PARENTS_ENEMY, 0, this.getSpeed());
             GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
         }else{
             for (int i = 0;i<10;i++){
                 double rad = 2 * Math.PI * ((double)(i*(150-40)/10+40) / 360);
                 int offsetX = (int) (Math.cos(rad) * this.getSpeed());
                 int offsetY = (int) (Math.sin(rad) * this.getSpeed());
-                Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()
+                Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()+ this.getHeight()
                         , this.getSpeed(), this.getDamage(), Bullet.PARENTS_ENEMY, offsetX, offsetY);
                 GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
             }
-            count = -49;//CD
+            count = -69;//CD
         }
     }
 
@@ -74,7 +71,7 @@ public class Enemy extends CommonObjects {
             shot();
         }
         ++count;
-        count %= 50;
+        count %= 70;
     }
 
     public BufferedImage getImage() {

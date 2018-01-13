@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/20
- * Modified Date: 2018/01/01
+ * Modified Date: 2018/01/13
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -44,8 +44,8 @@ public class GlobalManager implements StepPerFrame {
     }
 
     private void randomGenerateEnemy(){
-        if(enemies.size()<10){
-            int newEnemyCount = (int)(Math.random() * (10 - enemies.size()));
+        if(enemies.size()<2){
+            int newEnemyCount = (int)(Math.random() * (2 - enemies.size()));
             for (int i = 0; i < newEnemyCount; i++) {
                 Enemy enemy = new Enemy();
                 enemies.add(enemy);

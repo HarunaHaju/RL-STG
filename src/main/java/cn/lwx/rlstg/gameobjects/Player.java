@@ -60,8 +60,7 @@ public class Player extends CommonObjects {
 
     @Override
     public void step() {
-
-        //judgeGetShot();
+        judgeGetShot();
     }
 
     public BufferedImage getImage() {
