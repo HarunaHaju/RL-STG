@@ -1,5 +1,7 @@
 package cn.lwx.rlstg.algorithm.QLearning;
 
+import java.util.ArrayList;
+
 /**
  * Package: cn.lwx.rlstg.algorithm.QLearning
  * Comments:
@@ -11,5 +13,27 @@ package cn.lwx.rlstg.algorithm.QLearning;
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class QState {
+    private ArrayList<Vector2D> bulletDeltaVectors;
+    private ArrayList<Vector2D> enemyDeltaVectors;
 
+    public QState(ArrayList<Vector2D> bulletDeltaVectors, ArrayList<Vector2D> enemyDeltaVectors) {
+        this.bulletDeltaVectors = bulletDeltaVectors;
+        this.enemyDeltaVectors = enemyDeltaVectors;
+    }
+
+    public ArrayList<Vector2D> getBulletDeltaVectors() {
+        return bulletDeltaVectors;
+    }
+
+    public void setBulletDeltaVectors(ArrayList<Vector2D> bulletDeltaVectors) {
+        this.bulletDeltaVectors = bulletDeltaVectors;
+    }
+
+    public ArrayList<Vector2D> getEnemyDeltaVectors() {
+        return enemyDeltaVectors;
+    }
+
+    public void setEnemyDeltaVectors(ArrayList<Vector2D> enemyDeltaVectors) {
+        this.enemyDeltaVectors = enemyDeltaVectors;
+    }
 }
