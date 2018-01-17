@@ -37,9 +37,12 @@ public class QLearning {
         this.QTable = QTable;
     }
 
-    public int decied(QState state){
+    public int decide(QState state){
         if(QTable.containsKey(state)){
-           return QTable.get(state).getAction();
+            if (Math.random() < eGreedy)
+                return QTable.get(state).getAction();
+            else
+                return (int)(Math.random()*4);
         } else {
             QTable.put(state,new QValue());
             return (int)(Math.random()*4);
