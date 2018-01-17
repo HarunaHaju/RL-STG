@@ -1,6 +1,7 @@
 package cn.lwx.rlstg.algorithm.QLearning;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Package: cn.lwx.rlstg.algorithm.QLearning
@@ -15,10 +16,14 @@ import java.util.ArrayList;
 public class QState {
     private ArrayList<Vector2D> bulletDeltaVectors;
     private ArrayList<Vector2D> enemyDeltaVectors;
+    private ArrayList<ArrayList<Vector2D>> lists;
 
     public QState(ArrayList<Vector2D> bulletDeltaVectors, ArrayList<Vector2D> enemyDeltaVectors) {
         this.bulletDeltaVectors = bulletDeltaVectors;
         this.enemyDeltaVectors = enemyDeltaVectors;
+        lists = new ArrayList<>();
+        lists.add(this.bulletDeltaVectors);
+        lists.add(this.enemyDeltaVectors);
     }
 
     public ArrayList<Vector2D> getBulletDeltaVectors() {
@@ -35,5 +40,21 @@ public class QState {
 
     public void setEnemyDeltaVectors(ArrayList<Vector2D> enemyDeltaVectors) {
         this.enemyDeltaVectors = enemyDeltaVectors;
+    }
+
+    @Override
+    public int hashCode() {
+        return lists != null ? lists.hashCode():0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null || getClass() != this.getClass())
+            return false;
+        if(this == o)
+            return true;
+        QState state = (QState) o;
+        return(bulletDeltaVectors.equals(state.getBulletDeltaVectors())
+                &&enemyDeltaVectors.equals(state.getEnemyDeltaVectors()));
     }
 }
