@@ -49,7 +49,7 @@ public class QState {
 
     @Override
     public boolean equals(Object o) {
-        if(o == null || getClass() != this.getClass())
+        if(o == null || o.getClass() != this.getClass())
             return false;
         if(this == o)
             return true;
