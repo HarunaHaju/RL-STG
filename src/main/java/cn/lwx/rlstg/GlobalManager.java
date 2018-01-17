@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/20
- * Modified Date: 2018/01/13
+ * Modified Date: 2018/01/17
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -26,6 +26,14 @@ public class GlobalManager implements StepPerFrame {
     private Player player;
     private ConcurrentLinkedQueue<Enemy> enemies;
     private ConcurrentLinkedQueue<Bullet> bullets;
+
+    public static final int ACTION_MOVE_UP = 0;
+    public static final int ACTION_MOVE_DOWN = 1;
+    public static final int ACTION_MOVE_LEFT = 3;
+    public static final int ACTION_MOVE_RIGHT = 4;
+
+    private int count = 0;
+    private static final int THREAD_TIME = 3;//one step() per 3 frame
 
     public static final GlobalManager GLOBAL_MANAGER = new GlobalManager();
 
@@ -62,8 +70,12 @@ public class GlobalManager implements StepPerFrame {
 
     @Override
     public void step() {
-        randomGenerateEnemy();
-        liveScore++;
+        count ++;
+        if(count == THREAD_TIME) {
+            randomGenerateEnemy();
+            liveScore++;
+            count = 0;
+        }
         player.step();
         bullets.forEach(Bullet::step);
         enemies.forEach(Enemy::step);

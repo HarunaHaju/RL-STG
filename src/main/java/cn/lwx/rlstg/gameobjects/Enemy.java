@@ -11,15 +11,16 @@ import java.util.Random;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/01/13
+ * Modified Date: 2018/01/17
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class Enemy extends CommonObjects {
-
     private BufferedImage image;
-    private int count = 0;
+
+    private int shotCount = 0;
+    private static final int SHOT_TIME = 60;
 
     public Enemy(){
         super(100,(int)(Math.random()*300),50,5,10);
@@ -60,18 +61,17 @@ public class Enemy extends CommonObjects {
                         , this.getSpeed(), this.getDamage(), Bullet.PARENTS_ENEMY, offsetX, offsetY);
                 GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
             }
-            count = -69;//CD
         }
     }
 
     @Override
     public void step() {
         judgeGetShot();
-        if (count == 0) {
+        ++shotCount;
+        if (shotCount == SHOT_TIME) {
             shot();
+            shotCount = 0;
         }
-        ++count;
-        count %= 70;
     }
 
     public BufferedImage getImage() {

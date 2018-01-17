@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2017/12/22
+ * Modified Date: 2018/01/17
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -24,6 +24,8 @@ public class MainFrame extends JFrame implements Runnable {
 
     private boolean isRunning;
     private Thread thread;
+
+    private static final int THREAD_TIME = 16;
 
     public MainFrame(){
         thread = new Thread(this);
@@ -55,7 +57,6 @@ public class MainFrame extends JFrame implements Runnable {
         this.setTitle("RL_STG by lwx");
 
         this.setFocusable(true);
-        this.addKeyListener(this.panel_game);
 
         this.setLayout(new BorderLayout());
         this.add(panel_game,BorderLayout.CENTER);
@@ -94,15 +95,20 @@ public class MainFrame extends JFrame implements Runnable {
 
     @Override
     public void run() {
+        long timer;
         while (isRunning){
+            timer = System.currentTimeMillis();
             this.repaint();
             this.panel_game.repaint();
             this.panel_game.step();
-            try {
-                Thread.sleep(1000/60);
-            } catch (Exception e) {
-                isRunning = false;
-                e.printStackTrace();
+            timer = System.currentTimeMillis() - timer;
+            if(THREAD_TIME - timer > 0L) {
+                try {
+                    Thread.sleep(THREAD_TIME - timer);
+                } catch (Exception e) {
+                    isRunning = false;
+                    e.printStackTrace();
+                }
             }
         }
     }

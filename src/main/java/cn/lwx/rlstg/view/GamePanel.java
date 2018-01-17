@@ -14,12 +14,12 @@ import java.awt.event.KeyListener;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/19
- * Modified Date: 2017/12/25
+ * Modified Date: 2018/01/17
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
-class GamePanel extends JPanel implements StepPerFrame,KeyListener {
+class GamePanel extends JPanel implements StepPerFrame {
 
     private Font font;
 
@@ -61,46 +61,5 @@ class GamePanel extends JPanel implements StepPerFrame,KeyListener {
         graphics.setFont(this.font);
         graphics.drawString("KillScore:"+GlobalManager.GLOBAL_MANAGER.getKillScore(),0,20);
         graphics.drawString("LiveScore:"+GlobalManager.GLOBAL_MANAGER.getLiveScore(),0,40);
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-        switch (keyEvent.getKeyCode()){
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_W:
-                GlobalManager.GLOBAL_MANAGER.getPlayer().moveUp();
-                this.repaint();
-                break;
-            case KeyEvent.VK_DOWN:
-            case KeyEvent.VK_S:
-                GlobalManager.GLOBAL_MANAGER.getPlayer().moveDown();
-                this.repaint();
-                break;
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_A:
-                GlobalManager.GLOBAL_MANAGER.getPlayer().moveLeft();
-                this.repaint();
-                break;
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_D:
-                GlobalManager.GLOBAL_MANAGER.getPlayer().moveRight();
-                this.repaint();
-                break;
-            case KeyEvent.VK_J:
-                GlobalManager.GLOBAL_MANAGER.getPlayer().shot();
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-
     }
 }
