@@ -14,12 +14,10 @@ import cn.lwx.rlstg.interfaces.StepPerFrame;
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 abstract class CommonObjects implements StepPerFrame {
-    private double hp;
     private int x;
     private int y;
     private int speed;
     private int bulletSpeed;
-    private double damage;
     private int height;
     private int width;
     private boolean isAlive;
@@ -28,12 +26,10 @@ abstract class CommonObjects implements StepPerFrame {
     public final static int PLAYER = 0;
     public final static int ENEMY = 1;
 
-    CommonObjects(double hp, int x, int y, int speed,int bulletSpeed, double damage) {
-        this.hp = hp;
+    CommonObjects(int x, int y, int speed,int bulletSpeed) {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.damage = damage;
         this.bulletSpeed = bulletSpeed;
         this.width = 0;
         this.height = 0;
@@ -96,14 +92,6 @@ abstract class CommonObjects implements StepPerFrame {
 
     public abstract void shot();
 
-    public double getHp() {
-        return hp;
-    }
-
-    public void setHp(double hp) {
-        this.hp = hp;
-    }
-
     public int getX() {
         return x;
     }
@@ -126,14 +114,6 @@ abstract class CommonObjects implements StepPerFrame {
 
     public void setSpeed(int speed) {
         this.speed = speed;
-    }
-
-    public double getDamage() {
-        return damage;
-    }
-
-    public void setDamage(double damage) {
-        this.damage = damage;
     }
 
     public int getHeight() {

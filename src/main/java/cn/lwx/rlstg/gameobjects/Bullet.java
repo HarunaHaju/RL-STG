@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/24
- * Modified Date: 2018/01/12
+ * Modified Date: 2018/01/18
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -21,7 +21,6 @@ public class Bullet implements StepPerFrame {
     private int x;
     private int y;
     private int speed;
-    private double damage;
     private int height;
     private int width;
     private int flag;
@@ -31,11 +30,10 @@ public class Bullet implements StepPerFrame {
     public static final int PARENTS_PLAYER = 1;
     public static final int PARENTS_ENEMY = 2;
 
-    public Bullet(int x,int y,int speed,double damage,int flag) {
+    public Bullet(int x,int y,int speed,int flag) {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.damage = damage;
         this.flag = flag;
         try {
             image = ImageIO.read(Bullet.class.getResource("/img/bullet.png"));
@@ -46,11 +44,10 @@ public class Bullet implements StepPerFrame {
         }
     }
 
-    public Bullet(int x,int y,int speed,double damage,int flag,int offsetX,int offsetY) {
+    public Bullet(int x,int y,int speed,int flag,int offsetX,int offsetY) {
         this.x = x;
         this.y = y;
         this.speed = speed;
-        this.damage = damage;
         this.flag = flag;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
@@ -110,14 +107,6 @@ public class Bullet implements StepPerFrame {
 
     public void setSpeed(int speed) {
         this.speed = speed;
-    }
-
-    public double getDamage() {
-        return damage;
-    }
-
-    public void setDamage(double damage) {
-        this.damage = damage;
     }
 
     public int getHeight() {

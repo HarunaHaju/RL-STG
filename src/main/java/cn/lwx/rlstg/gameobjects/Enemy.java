@@ -23,7 +23,7 @@ public class Enemy extends CommonObjects {
     private static final int SHOT_TIME = 60;
 
     public Enemy(){
-        super(100,(int)(Math.random()*300),50,3,5,10);
+        super((int)(Math.random()*300),50,3,5);
         this.setFlag(CommonObjects.ENEMY);
         try {
             image = ImageIO.read(Enemy.class.getResource("/img/enemy.png"));
@@ -34,8 +34,8 @@ public class Enemy extends CommonObjects {
         }
     }
 
-    public Enemy(double hp, int x, int y, int speed,int bulletSpeed, double damage) {
-        super(hp, x, y, speed,bulletSpeed, damage);
+    public Enemy(int x, int y, int speed,int bulletSpeed) {
+        super(x, y, speed,bulletSpeed);
         this.setFlag(CommonObjects.ENEMY);
         try {
             image = ImageIO.read(Enemy.class.getResource("/img/enemy.png"));
@@ -50,7 +50,7 @@ public class Enemy extends CommonObjects {
     public void shot(){
         if(Math.random()<0.95) {
             Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()+ this.getHeight()
-                    , this.getBulletSpeed(), this.getDamage(), Bullet.PARENTS_ENEMY, 0, this.getBulletSpeed());
+                    , this.getBulletSpeed(), Bullet.PARENTS_ENEMY, 0, this.getBulletSpeed());
             GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
         }else{
             for (int i = 0;i<10;i++){
@@ -58,7 +58,7 @@ public class Enemy extends CommonObjects {
                 int offsetX = (int) (Math.cos(rad) * this.getBulletSpeed());
                 int offsetY = (int) (Math.sin(rad) * this.getBulletSpeed());
                 Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()+ this.getHeight()
-                        , this.getBulletSpeed(), this.getDamage(), Bullet.PARENTS_ENEMY, offsetX, offsetY);
+                        , this.getBulletSpeed(), Bullet.PARENTS_ENEMY, offsetX, offsetY);
                 GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
             }
         }
