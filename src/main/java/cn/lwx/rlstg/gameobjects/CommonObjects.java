@@ -8,7 +8,7 @@ import cn.lwx.rlstg.interfaces.StepPerFrame;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/01/18
+ * Modified Date: 2018/01/19
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -22,6 +22,7 @@ abstract class CommonObjects implements StepPerFrame {
     private int width;
     private boolean isAlive;
     private int flag;
+    private int action = -1;
 
     public final static int PLAYER = 0;
     public final static int ENEMY = 1;
@@ -34,6 +35,25 @@ abstract class CommonObjects implements StepPerFrame {
         this.width = 0;
         this.height = 0;
         this.isAlive = true;
+    }
+
+    public void move(){
+        switch (action){
+            case GlobalManager.ACTION_MOVE_UP:
+                moveUp();
+                break;
+            case GlobalManager.ACTION_MOVE_DOWN:
+                moveDown();
+                break;
+            case GlobalManager.ACTION_MOVE_LEFT:
+                moveLeft();
+                break;
+            case GlobalManager.ACTION_MOVE_RIGHT:
+                moveRight();
+                break;
+            default:
+                break;
+        }
     }
 
     public void judgeGetShot(){
@@ -154,5 +174,13 @@ abstract class CommonObjects implements StepPerFrame {
 
     public void setBulletSpeed(int bulletSpeed) {
         this.bulletSpeed = bulletSpeed;
+    }
+
+    public int getAction() {
+        return action;
+    }
+
+    public void setAction(int action) {
+        this.action = action;
     }
 }

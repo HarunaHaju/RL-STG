@@ -14,15 +14,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/20
- * Modified Date: 2018/01/18
+ * Modified Date: 2018/01/19
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class GlobalManager implements StepPerFrame {
-    private int killScore;
-    private int liveScore;
-
     private Player player;
     private ConcurrentLinkedQueue<Enemy> enemies;
     private ConcurrentLinkedQueue<Bullet> bullets;
@@ -32,28 +29,28 @@ public class GlobalManager implements StepPerFrame {
     public static final int ACTION_MOVE_LEFT = 2;
     public static final int ACTION_MOVE_RIGHT = 3;
 
+    private static final int MAX_ENEMY_SIZE = 5;
+
     private int count = 0;
     private static final int THREAD_TIME = 3;//one step() per 3 frame
 
     public static final GlobalManager GLOBAL_MANAGER = new GlobalManager();
 
     private GlobalManager(){
-        killScore = 0;
-        liveScore = 0;
         player = new Player();
         enemies = new ConcurrentLinkedQueue<>();
         bullets = new ConcurrentLinkedQueue<>();
     }
 
     public void reset(){
-        killScore = 0;
-        liveScore = 0;
         player.reset();
+        enemies.clear();
+        bullets.clear();
     }
 
     private void randomGenerateEnemy(){
-        if(enemies.size()<2){
-            int newEnemyCount = (int)(Math.random() * (2 - enemies.size()));
+        if(enemies.size() < MAX_ENEMY_SIZE){
+            int newEnemyCount = (int)(Math.random() * (5 - enemies.size())) + 1;
             for (int i = 0; i < newEnemyCount; i++) {
                 Enemy enemy = new Enemy();
                 enemies.add(enemy);
@@ -63,8 +60,10 @@ public class GlobalManager implements StepPerFrame {
 
     private void removeDeadEnemies(){
         enemies.forEach(enemy -> {
-            if(!enemy.isAlive())
+            if(!enemy.isAlive()) {
+                player.getReward(10);
                 enemies.remove(enemy);
+            }
         });
     }
 
@@ -73,29 +72,18 @@ public class GlobalManager implements StepPerFrame {
         count ++;
         if(count == THREAD_TIME) {
             randomGenerateEnemy();
-            liveScore++;
             count = 0;
         }
         player.step();
         bullets.forEach(Bullet::step);
         enemies.forEach(Enemy::step);
+        if (!player.isAlive()){
+            player.getReward(-1000);//get reward
+            this.reset();
+        } else {
+            player.getReward(1);
+        }
         removeDeadEnemies();
-    }
-
-    public int getKillScore() {
-        return killScore;
-    }
-
-    public void setKillScore(int killScore) {
-        this.killScore = killScore;
-    }
-
-    public int getLiveScore() {
-        return liveScore;
-    }
-
-    public void setLiveScore(int liveScore) {
-        this.liveScore = liveScore;
     }
 
     public Player getPlayer() {

@@ -14,7 +14,7 @@ import java.awt.event.KeyListener;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/19
- * Modified Date: 2018/01/17
+ * Modified Date: 2018/01/19
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -59,7 +59,6 @@ class GamePanel extends JPanel implements StepPerFrame {
         );
 
         graphics.setFont(this.font);
-        graphics.drawString("KillScore:"+GlobalManager.GLOBAL_MANAGER.getKillScore(),0,20);
-        graphics.drawString("LiveScore:"+GlobalManager.GLOBAL_MANAGER.getLiveScore(),0,40);
+        graphics.drawString("QTable Size:"+GlobalManager.GLOBAL_MANAGER.getPlayer().getLearning().getQTable().size(),0,20);
     }
 }

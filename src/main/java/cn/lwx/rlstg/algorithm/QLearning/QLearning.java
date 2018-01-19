@@ -7,7 +7,7 @@ import java.util.HashMap;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/17
+ * Modified Date: 2018/1/19
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -17,7 +17,7 @@ public class QLearning {
     private double learningRate;
     private double rewardDecay;
 
-    private HashMap<QState,QValue> QTable;//state-value pair
+    private HashMap<QState, QValue> QTable;//state-value pair
 
     public QLearning() {
         QTable = new HashMap<>();
@@ -37,30 +37,31 @@ public class QLearning {
         this.QTable = QTable;
     }
 
-    public int decide(QState state){
-        if(QTable.containsKey(state)){
+    public int decide(QState state) {
+        if (QTable.containsKey(state)) {
             if (Math.random() < eGreedy)
                 return QTable.get(state).getAction();
             else
-                return (int)(Math.random()*4);
+                return (int) (Math.random() * 4);
         } else {
-            QTable.put(state,new QValue());
-            return (int)(Math.random()*4);
+            QTable.put(state, new QValue());
+            return (int) (Math.random() * 4);
         }
     }
 
-    public void learn(QState state,int reward){
-        if(QTable.containsKey(state)){
-            int action = QTable.get(state).getAction();
+    public void learn(QState state, int action, int reward) {
+        if (QTable.containsKey(state)) {
+            if (action == -1)
+                return;
             double qPredict = QTable.get(state).getValue(action);
             double qTarget = reward + rewardDecay * qPredict;
-            QTable.get(state).setValue(action,qPredict + learningRate * (qTarget - qPredict));
+            QTable.get(state).setValue(action, qPredict + learningRate * (qTarget - qPredict));
         } else {
-            QTable.put(state,new QValue());
+            QTable.put(state, new QValue());
         }
     }
 
-    public void setQTable(QState state,QValue value){
+    public void setQTable(QState state, QValue value) {
         this.QTable.put(state, value);
     }
 

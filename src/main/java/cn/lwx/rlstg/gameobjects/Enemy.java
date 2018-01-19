@@ -11,7 +11,7 @@ import java.util.Random;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/01/18
+ * Modified Date: 2018/01/19
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -20,44 +20,47 @@ public class Enemy extends CommonObjects {
     private BufferedImage image;
 
     private int shotCount = 0;
-    private static final int SHOT_TIME = 60;
+    private static final int THREAD_TIME = 80;
 
-    public Enemy(){
-        super((int)(Math.random()*300),50,3,5);
+    private int action = -1;
+
+    public Enemy() {
+        super(50, 50, 1, 3);
         this.setFlag(CommonObjects.ENEMY);
         try {
             image = ImageIO.read(Enemy.class.getResource("/img/enemy.png"));
             this.setWidth(image.getWidth());
             this.setHeight(image.getHeight());
-        } catch (Exception e){
+            this.setX((int) (Math.random() * (480 - getWidth())));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Enemy(int x, int y, int speed,int bulletSpeed) {
-        super(x, y, speed,bulletSpeed);
+    public Enemy(int x, int y, int speed, int bulletSpeed) {
+        super(x, y, speed, bulletSpeed);
         this.setFlag(CommonObjects.ENEMY);
         try {
             image = ImageIO.read(Enemy.class.getResource("/img/enemy.png"));
             this.setWidth(image.getWidth());
             this.setHeight(image.getHeight());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void shot(){
-        if(Math.random()<0.95) {
-            Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()+ this.getHeight()
+    public void shot() {
+        if (Math.random() < 0.95) {
+            Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY() + this.getHeight()
                     , this.getBulletSpeed(), Bullet.PARENTS_ENEMY, 0, this.getBulletSpeed());
             GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
-        }else{
-            for (int i = 0;i<10;i++){
-                double rad = 2 * Math.PI * ((double)(i*(150-40)/10+40) / 360);
+        } else {
+            for (int i = 0; i < 10; i++) {
+                double rad = 2 * Math.PI * ((double) (i * (150 - 40) / 10 + 40) / 360);
                 int offsetX = (int) (Math.cos(rad) * this.getBulletSpeed());
                 int offsetY = (int) (Math.sin(rad) * this.getBulletSpeed());
-                Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY()+ this.getHeight()
+                Bullet bullet = new Bullet(this.getX() + this.getWidth() / 2, this.getY() + this.getHeight()
                         , this.getBulletSpeed(), Bullet.PARENTS_ENEMY, offsetX, offsetY);
                 GlobalManager.GLOBAL_MANAGER.getBullets().add(bullet);
             }
@@ -67,15 +70,17 @@ public class Enemy extends CommonObjects {
     @Override
     public void step() {
         judgeGetShot();
+        this.move();
         ++shotCount;
-        if (shotCount == SHOT_TIME) {
+        if (shotCount == THREAD_TIME) {
+            this.setAction((int) (Math.random() * 5));
             shot();
             shotCount = 0;
         }
     }
 
     public BufferedImage getImage() {
-        if(image.getHeight()>0&&image.getWidth()>0)
+        if (image.getHeight() > 0 && image.getWidth() > 0)
             return image;
         else
             return null;

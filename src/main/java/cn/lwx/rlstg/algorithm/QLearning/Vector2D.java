@@ -54,4 +54,19 @@ public class Vector2D implements Comparable<Vector2D>{
         else
             return 1;
     }
+
+    @Override
+    public int hashCode() {
+        return Integer.valueOf(x).hashCode() + Integer.valueOf(y).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null || o.getClass() != this.getClass())
+            return false;
+        if(this == o)
+            return true;
+        Vector2D vec = (Vector2D) o;
+        return(x==vec.getX() && y==vec.getY());
+    }
 }
