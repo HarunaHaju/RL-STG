@@ -1,6 +1,6 @@
 package cn.lwx.rlstg.algorithm.QLearning;
 
-import com.sun.istack.internal.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Package: cn.lwx.rlstg.algorithm.QLearning
@@ -12,7 +12,7 @@ import com.sun.istack.internal.NotNull;
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
-public class Vector2D implements Comparable {
+public class Vector2D implements Comparable<Vector2D>{
     private int x;
     private int y;
 
@@ -47,10 +47,7 @@ public class Vector2D implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        if(o == null || o.getClass() != this.getClass())
-            return 1;
-        Vector2D vec = (Vector2D)o;
+    public int compareTo(@Nonnull Vector2D vec) {
         //find for closest vector
         if(vec.getDistance() > this.getDistance())
             return -1;

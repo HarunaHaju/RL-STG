@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/18
+ * Modified Date: 2018/1/19
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -19,6 +19,10 @@ public class QState {
         lists = new ArrayList<>();
         lists.add(bulletDeltaVectors);
         lists.add(enemyDeltaVectors);
+    }
+
+    public QState(){
+        lists = new ArrayList<>();
     }
 
     public ArrayList<ArrayList<Vector2D>> getLists() {
