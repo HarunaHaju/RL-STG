@@ -1,25 +1,27 @@
 package cn.lwx.rlstg.algorithm.QLearning;
 
+import com.sun.istack.internal.NotNull;
+
 /**
  * Package: cn.lwx.rlstg.algorithm.QLearning
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/17
+ * Modified Date: 2018/1/19
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
-public class Vector2D {
+public class Vector2D implements Comparable {
     private int x;
     private int y;
 
-    public Vector2D(){
+    public Vector2D() {
         x = 0;
         y = 0;
     }
 
-    public Vector2D(int x,int y){
+    public Vector2D(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -30,5 +32,29 @@ public class Vector2D {
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getDistance() {
+        return (int) Math.pow(this.getX(),2) + (int) Math.pow(this.getY(),2);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(o == null || o.getClass() != this.getClass())
+            return 1;
+        Vector2D vec = (Vector2D)o;
+        //find for closest vector
+        if(vec.getDistance() > this.getDistance())
+            return -1;
+        else
+            return 1;
     }
 }
