@@ -1,7 +1,5 @@
 package cn.lwx.rlstg.algorithm.QLearning;
 
-import javax.annotation.Nonnull;
-
 /**
  * Package: cn.lwx.rlstg.algorithm.QLearning
  * Comments:
@@ -47,7 +45,7 @@ public class Vector2D implements Comparable<Vector2D>{
     }
 
     @Override
-    public int compareTo(@Nonnull Vector2D vec) {
+    public int compareTo(Vector2D vec) {
         //find for closest vector
         if(vec.getDistance() > this.getDistance())
             return -1;
