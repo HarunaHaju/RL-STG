@@ -65,18 +65,8 @@ public class SelectiveFrame extends JFrame {
     }
 
     private void methodConfirm() {
-        switch (comboBox.getSelectedIndex()) {
-            case 0:
-                //Q-Learning
-                MainFrame mainFrame = new MainFrame();
-                this.dispose();
-                break;
-            case 1:
-                //Random
-                break;
-            default:
-                break;
-        }
+        MainFrame mainFrame = new MainFrame(comboBox.getSelectedIndex());
+        this.dispose();
     }
 
     private void methodCancel() {
