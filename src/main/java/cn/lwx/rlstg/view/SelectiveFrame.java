@@ -25,7 +25,7 @@ public class SelectiveFrame extends JFrame {
     }
 
     private void setupUI() {
-        this.setSize(400, 150);
+        this.setSize(400, 140);
 
         JLabel label1  = new JLabel("Which algorithm do you want to use?");
         label1.setFont(new Font("Helvetica",Font.PLAIN, 20));
@@ -34,6 +34,7 @@ public class SelectiveFrame extends JFrame {
         comboBox = new JComboBox<>();
         comboBox.setFont(new Font("Helvetica",Font.PLAIN, 16));
         comboBox.addItem("Q-Learning");
+        comboBox.addItem("Random");
 
         JLabel label2 = new JLabel("Algorithm:");
         label2.setFont(new Font("Helvetica",Font.PLAIN, 16));
@@ -56,7 +57,7 @@ public class SelectiveFrame extends JFrame {
 
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
-        this.setLocation(width / 2 - 200, height / 2 - 75);
+        this.setLocation(width / 2 - 200, height / 2 - 70);
         this.setTitle("RL_STG by lwx");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,9 +67,12 @@ public class SelectiveFrame extends JFrame {
     private void methodConfirm() {
         switch (comboBox.getSelectedIndex()) {
             case 0:
-                System.out.println("Ql");
+                //Q-Learning
+                MainFrame mainFrame = new MainFrame();
+                this.dispose();
                 break;
             case 1:
+                //Random
                 break;
             default:
                 break;
