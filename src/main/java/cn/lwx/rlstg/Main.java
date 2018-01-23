@@ -1,6 +1,5 @@
 package cn.lwx.rlstg;
 
-import cn.lwx.rlstg.view.MainFrame;
 import cn.lwx.rlstg.view.SelectiveFrame;
 
 import javax.swing.*;
