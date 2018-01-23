@@ -21,7 +21,7 @@ public class Main {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            Logger.getLogger(Main.class.getName()).log(Level.FINE,e.getMessage());
+            Logger.getLogger(Main.class.getName()).log(Level.FINE, e.getMessage());
             e.printStackTrace();
         }
         SelectiveFrame selectiveFrame = new SelectiveFrame();
