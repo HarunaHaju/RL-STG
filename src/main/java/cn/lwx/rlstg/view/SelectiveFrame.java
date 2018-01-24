@@ -8,17 +8,17 @@ import java.awt.*;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/23
- * Modified Date: 2018/1/23
+ * Modified Date: 2018/1/24
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class SelectiveFrame extends JFrame {
-    private JPanel comboPanel;
-    private JComboBox<String> comboBox;
-    private JPanel buttonPanel;
-    private JButton buttonConfirm;
-    private JButton buttonCancel;
+    private JPanel combo_panel;
+    private JComboBox<String> combo_box;
+    private JPanel panel_button;
+    private JButton button_confirm;
+    private JButton button_cancel;
 
     public SelectiveFrame() {
         setupUI();
@@ -31,29 +31,29 @@ public class SelectiveFrame extends JFrame {
         label1.setFont(new Font("Helvetica",Font.PLAIN, 20));
         this.add(label1,BorderLayout.NORTH);
 
-        comboBox = new JComboBox<>();
-        comboBox.setFont(new Font("Helvetica",Font.PLAIN, 16));
-        comboBox.addItem("Q-Learning");
-        comboBox.addItem("Random");
+        combo_box = new JComboBox<>();
+        combo_box.setFont(new Font("Helvetica",Font.PLAIN, 16));
+        combo_box.addItem("Q-Learning");
+        combo_box.addItem("Random");
 
         JLabel label2 = new JLabel("Algorithm:");
         label2.setFont(new Font("Helvetica",Font.PLAIN, 16));
 
-        comboPanel = new JPanel();
-        comboPanel.add(label2,BorderLayout.CENTER);
-        comboPanel.add(comboBox);
-        this.add(comboPanel,BorderLayout.CENTER);
+        combo_panel = new JPanel();
+        combo_panel.add(label2,BorderLayout.CENTER);
+        combo_panel.add(combo_box);
+        this.add(combo_panel,BorderLayout.CENTER);
 
-        buttonConfirm = new JButton("Confirm");
-        buttonConfirm.addActionListener(e -> methodConfirm());
+        button_confirm = new JButton("Confirm");
+        button_confirm.addActionListener(e -> methodConfirm());
 
-        buttonCancel = new JButton("Cancel");
-        buttonCancel.addActionListener(e -> methodCancel());
+        button_cancel = new JButton("Cancel");
+        button_cancel.addActionListener(e -> methodCancel());
 
-        buttonPanel = new JPanel();
-        buttonPanel.add(buttonConfirm);
-        buttonPanel.add(buttonCancel);
-        this.add(buttonPanel, BorderLayout.SOUTH);
+        panel_button = new JPanel();
+        panel_button.add(button_confirm);
+        panel_button.add(button_cancel);
+        this.add(panel_button, BorderLayout.SOUTH);
 
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -65,7 +65,7 @@ public class SelectiveFrame extends JFrame {
     }
 
     private void methodConfirm() {
-        MainFrame mainFrame = new MainFrame(comboBox.getSelectedIndex());
+        MainFrame mainFrame = new MainFrame(combo_box.getSelectedIndex());
         this.dispose();
     }
 
