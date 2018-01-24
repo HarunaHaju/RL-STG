@@ -1,5 +1,7 @@
 package cn.lwx.rlstg;
 
+import cn.lwx.rlstg.algorithm.Controller;
+import cn.lwx.rlstg.algorithm.QLearning.QLearning;
 import cn.lwx.rlstg.gameobjects.Bullet;
 import cn.lwx.rlstg.gameobjects.Enemy;
 import cn.lwx.rlstg.gameobjects.Player;
@@ -30,14 +32,26 @@ public class GlobalManager implements StepPerFrame {
     public static final int ACTION_MOVE_LEFT = 2;
     public static final int ACTION_MOVE_RIGHT = 3;
 
+    private Controller controller;
+
     private static final int MAX_ENEMY_SIZE = 5;
 
     private int count = 0;
     private static final int THREAD_TIME = 3;//one step() per 3 frame
 
-    public static final GlobalManager GLOBAL_MANAGER = new GlobalManager();
+    public static GlobalManager GLOBAL_MANAGER;
 
-    private GlobalManager(){
+    public GlobalManager(int flag){
+        switch (flag){
+            case Controller.ALGORITHM_QLEARNING:
+                controller = new QLearning();
+                break;
+            case Controller.ALGORITHM_RANDOM:
+                controller = new cn.lwx.rlstg.algorithm.Random.Random();
+                break;
+            default:
+                break;
+        }
         player = new Player();
         enemies = new ConcurrentLinkedQueue<>();
         bullets = new ConcurrentLinkedQueue<>();

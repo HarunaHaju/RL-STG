@@ -1,5 +1,7 @@
 package cn.lwx.rlstg.algorithm.QLearning;
 
+import cn.lwx.rlstg.algorithm.Controller;
+
 import java.util.HashMap;
 
 /**
@@ -7,12 +9,12 @@ import java.util.HashMap;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/19
+ * Modified Date: 2018/1/24
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
-public class QLearning {
+public class QLearning extends Controller {
     private double eGreedy;
     private double learningRate;
     private double rewardDecay;
@@ -20,6 +22,7 @@ public class QLearning {
     private HashMap<QState, QValue> QTable;//state-value pair
 
     public QLearning() {
+        super(Controller.ALGORITHM_QLEARNING);
         QTable = new HashMap<>();
         eGreedy = 0.9;
         learningRate = 0.01;
@@ -27,14 +30,11 @@ public class QLearning {
     }
 
     public QLearning(double eGreedy, double learningRate, double rewardDecay) {
+        super(Controller.ALGORITHM_QLEARNING);
         QTable = new HashMap<>();
         this.eGreedy = eGreedy;
         this.learningRate = learningRate;
         this.rewardDecay = rewardDecay;
-    }
-
-    public QLearning(HashMap<QState, QValue> QTable) {
-        this.QTable = QTable;
     }
 
     public int decide(QState state) {

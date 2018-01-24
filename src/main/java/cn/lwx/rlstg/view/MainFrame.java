@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/01/23
+ * Modified Date: 2018/01/24
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -28,14 +28,10 @@ public class MainFrame extends JFrame implements Runnable {
     private static final int THREAD_TIME = 16;
 
     public MainFrame(int flag){
-        switch (flag){
-            case 0:
-                break;
-            case 1:
-                break;
-            default:
-                break;
-        }
+        //init GLOBAL_MANAGER by different control algorithms
+        GlobalManager.GLOBAL_MANAGER = new GlobalManager(flag);
+
+        //start the thread
         thread = new Thread(this);
         isRunning = true;
         this.setUpUI();
