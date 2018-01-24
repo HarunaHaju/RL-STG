@@ -14,9 +14,9 @@ import java.awt.event.KeyListener;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/19
- * Modified Date: 2018/01/19
+ * Modified Date: 2018/1/24
  * Why & What is modified:
- * Version: 0.0.1beta
+ * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 class GamePanel extends JPanel implements StepPerFrame {
@@ -59,6 +59,6 @@ class GamePanel extends JPanel implements StepPerFrame {
         );
 
         graphics.setFont(this.font);
-        graphics.drawString("QTable Size:"+GlobalManager.GLOBAL_MANAGER.getPlayer().getLearning().getQTable().size(),0,20);
+        graphics.drawString("Algorithm:"+GlobalManager.GLOBAL_MANAGER.getController().getAlgorithmName(),0,20);
     }
 }

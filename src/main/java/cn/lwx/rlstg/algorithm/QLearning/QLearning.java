@@ -1,7 +1,11 @@
 package cn.lwx.rlstg.algorithm.QLearning;
 
+import cn.lwx.rlstg.GlobalManager;
 import cn.lwx.rlstg.algorithm.Controller;
+import cn.lwx.rlstg.gameobjects.Bullet;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -11,7 +15,7 @@ import java.util.HashMap;
  * Create Date: 2018/1/17
  * Modified Date: 2018/1/24
  * Why & What is modified:
- * Version: 0.0.1beta
+ * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class QLearning extends Controller {
@@ -21,55 +25,77 @@ public class QLearning extends Controller {
 
     private HashMap<QState, QValue> QTable;//state-value pair
 
+    private QState lastState;
+    private QState nowState;
+
     public QLearning() {
         super(Controller.ALGORITHM_QLEARNING);
         QTable = new HashMap<>();
+
+        lastState = new QState();
+        nowState = new QState();
+
         eGreedy = 0.9;
         learningRate = 0.01;
         rewardDecay = 0.9;
     }
 
-    public QLearning(double eGreedy, double learningRate, double rewardDecay) {
-        super(Controller.ALGORITHM_QLEARNING);
-        QTable = new HashMap<>();
-        this.eGreedy = eGreedy;
-        this.learningRate = learningRate;
-        this.rewardDecay = rewardDecay;
-    }
-
-    public int decide(QState state) {
-        if (QTable.containsKey(state)) {
+    @Override
+    public int decide() {
+        if (QTable.containsKey(nowState)) {
             if (Math.random() < eGreedy)
-                return QTable.get(state).getAction();
+                return QTable.get(nowState).getAction();
             else
                 return (int) (Math.random() * 4);
         } else {
-            QTable.put(state, new QValue());
+            QTable.put(nowState, new QValue());
             return (int) (Math.random() * 4);
         }
     }
 
-    public void learn(QState state, int action, int reward) {
-        if (QTable.containsKey(state)) {
+    public void learn(int action, int reward) {
+        if (QTable.containsKey(lastState)) {
             if (action == -1)
                 return;
-            double qPredict = QTable.get(state).getValue(action);
+            double qPredict = QTable.get(lastState).getValue(action);
             double qTarget = reward + rewardDecay * qPredict;
-            QTable.get(state).setValue(action, qPredict + learningRate * (qTarget - qPredict));
+            QTable.get(lastState).setValue(action, qPredict + learningRate * (qTarget - qPredict));
         } else {
-            QTable.put(state, new QValue());
+            QTable.put(lastState, new QValue());
         }
     }
 
-    public void setQTable(QState state, QValue value) {
-        this.QTable.put(state, value);
-    }
+    public void updateState(){
+        //add all enemies to list and sort by distance
+        ArrayList<Vector2D> enemyVectors = new ArrayList<>();
+        GlobalManager.GLOBAL_MANAGER.getEnemies().forEach(enemy -> {
+            enemyVectors.add(new Vector2D(GlobalManager.GLOBAL_MANAGER.getPlayer().getX() - enemy.getX(),
+                    GlobalManager.GLOBAL_MANAGER.getPlayer().getY() - enemy.getY()));
+        });
+        Collections.sort(enemyVectors);
 
-    public HashMap<QState, QValue> getQTable() {
-        return QTable;
-    }
+        //add all bullets to list and sort by distance
+        ArrayList<Vector2D> bulletVectors = new ArrayList<>();
+        GlobalManager.GLOBAL_MANAGER.getBullets().forEach(bullet -> {
+            if(bullet.getFlag() == Bullet.PARENTS_ENEMY)
+                bulletVectors.add(new Vector2D(GlobalManager.GLOBAL_MANAGER.getPlayer().getX() - bullet.getX(),
+                        GlobalManager.GLOBAL_MANAGER.getPlayer().getY() - bullet.getY()));
+        });
+        Collections.sort(bulletVectors);
 
-    public void setQTable(HashMap<QState, QValue> QTable) {
-        this.QTable = QTable;
+        //if list have 5 more bullets, keep shortest five one and delete others.
+        if(bulletVectors.size() > 5) {
+            ArrayList<Vector2D> removeList = new ArrayList<>();
+            int maxDistance = bulletVectors.get(4).getDistance();
+            bulletVectors.forEach(bullet->{
+                if(bullet.getDistance() > maxDistance)
+                    removeList.add(bullet);
+            });
+            bulletVectors.removeAll(removeList);
+        }
+
+        //update state
+        lastState = nowState;
+        nowState = new QState(bulletVectors,enemyVectors);
     }
 }

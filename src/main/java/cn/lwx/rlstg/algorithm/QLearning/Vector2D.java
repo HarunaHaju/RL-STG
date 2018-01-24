@@ -5,9 +5,9 @@ package cn.lwx.rlstg.algorithm.QLearning;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/19
+ * Modified Date: 2018/1/24
  * Why & What is modified:
- * Version: 0.0.1beta
+ * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class Vector2D implements Comparable<Vector2D>{

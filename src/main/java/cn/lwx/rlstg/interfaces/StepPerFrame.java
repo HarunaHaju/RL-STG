@@ -5,9 +5,9 @@ package cn.lwx.rlstg.interfaces;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2017/12/20
+ * Modified Date: 2018/1/24
  * Why & What is modified:
- * Version: 0.0.1beta
+ * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 
