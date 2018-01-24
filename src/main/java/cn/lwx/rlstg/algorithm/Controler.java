@@ -10,6 +10,6 @@ package cn.lwx.rlstg.algorithm;
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
-public abstract class algorithm {
+public abstract class Controler {
 
 }
