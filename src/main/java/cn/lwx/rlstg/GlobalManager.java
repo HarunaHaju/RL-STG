@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/20
- * Modified Date: 2018/01/19
+ * Modified Date: 2018/01/24
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -24,6 +24,7 @@ public class GlobalManager implements StepPerFrame {
     private ConcurrentLinkedQueue<Enemy> enemies;
     private ConcurrentLinkedQueue<Bullet> bullets;
 
+    //4 action of player
     public static final int ACTION_MOVE_UP = 0;
     public static final int ACTION_MOVE_DOWN = 1;
     public static final int ACTION_MOVE_LEFT = 2;
