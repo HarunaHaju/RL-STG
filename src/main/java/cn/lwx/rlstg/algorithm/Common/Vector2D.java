@@ -44,6 +44,10 @@ public class Vector2D implements Comparable<Vector2D>{
         return (int) Math.pow(this.getX(),2) + (int) Math.pow(this.getY(),2);
     }
 
+    public double getGeometricDistance(){
+        return Math.sqrt(Math.pow(this.getX(),2) + Math.pow(this.getY(),2));
+    }
+
     @Override
     public int compareTo(Vector2D vec) {
         //find for closest vector
