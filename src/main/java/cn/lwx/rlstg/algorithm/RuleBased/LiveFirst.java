@@ -7,7 +7,7 @@ import cn.lwx.rlstg.algorithm.Controller;
  * Comments: This algorithm aims to live longer
  * Author: lwx
  * Create Date: 2018/1/24
- * Modified Date: 2018/1/24
+ * Modified Date: 2018/1/25
  * Why & What is modified:
  * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko
