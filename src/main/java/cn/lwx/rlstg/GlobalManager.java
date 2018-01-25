@@ -33,6 +33,9 @@ public class GlobalManager implements StepPerFrame {
     public static final int ACTION_MOVE_RIGHT = 3;
     public static final int ACTION_DO_NOTHING = 4;
 
+    private int score;
+    private int bestScore;
+
     private Controller controller;
 
     private static final int MAX_ENEMY_SIZE = 5;
@@ -56,12 +59,18 @@ public class GlobalManager implements StepPerFrame {
             default:
                 break;
         }
+        score = 0;
+        bestScore = 0;
         player = new Player();
         enemies = new ConcurrentLinkedQueue<>();
         bullets = new ConcurrentLinkedQueue<>();
     }
 
     public void reset(){
+        if (score >= bestScore){
+            bestScore = score;
+        }
+        score = 0;
         player.reset();
         enemies.clear();
         bullets.clear();
@@ -83,6 +92,7 @@ public class GlobalManager implements StepPerFrame {
                 if (controller.getFlag() == Controller.ALGORITHM_QLEARNING){
                     ((QLearning)(controller)).learn(player.getAction(),10);
                 }
+                score += 10;
                 enemies.remove(enemy);
             }
         });
@@ -107,6 +117,7 @@ public class GlobalManager implements StepPerFrame {
             if (controller.getFlag() == Controller.ALGORITHM_QLEARNING){
                 ((QLearning)(controller)).learn(player.getAction(),1);
             }
+            score++;
         }
         removeDeadEnemies();
     }
@@ -125,5 +136,13 @@ public class GlobalManager implements StepPerFrame {
 
     public Controller getController() {
         return controller;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getBestScore() {
+        return bestScore;
     }
 }

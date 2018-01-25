@@ -59,5 +59,7 @@ class GamePanel extends JPanel implements StepPerFrame {
 
         graphics.setFont(this.font);
         graphics.drawString("Algorithm:"+GlobalManager.GLOBAL_MANAGER.getController().getAlgorithmName(),0,20);
+        graphics.drawString("Score:"+GlobalManager.GLOBAL_MANAGER.getScore(),0,40);
+        graphics.drawString("Best Score:"+GlobalManager.GLOBAL_MANAGER.getBestScore(),0,60);
     }
 }
