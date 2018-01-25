@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/24
+ * Modified Date: 2018/1/25
  * Why & What is modified:
  * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -27,12 +27,14 @@ public class QValue {
         values.put(GlobalManager.ACTION_MOVE_DOWN , 0.0);
         values.put(GlobalManager.ACTION_MOVE_LEFT , 0.0);
         values.put(GlobalManager.ACTION_MOVE_RIGHT , 0.0);
+        values.put(GlobalManager.ACTION_DO_NOTHING, 0.0);
     }
 
     public int getAction(){
         if(values.get(GlobalManager.ACTION_MOVE_UP).equals(values.get(GlobalManager.ACTION_MOVE_DOWN))
                 && values.get(GlobalManager.ACTION_MOVE_UP).equals(values.get(GlobalManager.ACTION_MOVE_RIGHT))
-                &&values.get(GlobalManager.ACTION_MOVE_UP).equals(values.get(GlobalManager.ACTION_MOVE_LEFT))){
+                &&values.get(GlobalManager.ACTION_MOVE_UP).equals(values.get(GlobalManager.ACTION_MOVE_LEFT))
+                &&values.get(GlobalManager.ACTION_MOVE_UP).equals(values.get(GlobalManager.ACTION_DO_NOTHING))){
             return (int)(Math.random()*values.size());
         }
         int action = GlobalManager.ACTION_MOVE_UP;
