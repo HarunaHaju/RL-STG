@@ -3,6 +3,7 @@ package cn.lwx.rlstg.gameobjects;
 import cn.lwx.rlstg.GlobalManager;
 import cn.lwx.rlstg.algorithm.Controller;
 import cn.lwx.rlstg.algorithm.QLearning.QLearning;
+import cn.lwx.rlstg.algorithm.RuleBased.LiveFirst;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -12,7 +13,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/01/24
+ * Modified Date: 2018/01/25
  * Why & What is modified:
  * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -68,9 +69,20 @@ public class Player extends CommonObjects {
         if(count == THREAD_TIME){
             count = 0;
             this.shot();
-            if(GlobalManager.GLOBAL_MANAGER.getController().getFlag() == Controller.ALGORITHM_QLEARNING){
-                ((QLearning)GlobalManager.GLOBAL_MANAGER.getController()).updateState();
+
+            //update state
+            switch (GlobalManager.GLOBAL_MANAGER.getController().getFlag()){
+                case Controller.ALGORITHM_QLEARNING:
+                    ((QLearning)GlobalManager.GLOBAL_MANAGER.getController()).updateState();
+                    break;
+                case Controller.ALGORITHM_LIVEFIRST:
+                    ((LiveFirst)GlobalManager.GLOBAL_MANAGER.getController()).updateState();
+                    break;
+                default:
+                    break;
             }
+
+            //get action by algorithms
             this.setAction(GlobalManager.GLOBAL_MANAGER.getController().decide());
         }
     }
