@@ -1,6 +1,7 @@
 package cn.lwx.rlstg.algorithm.QLearning;
 
 import cn.lwx.rlstg.GlobalManager;
+import cn.lwx.rlstg.algorithm.Common.Vector2D;
 import cn.lwx.rlstg.algorithm.Controller;
 import cn.lwx.rlstg.gameobjects.Bullet;
 

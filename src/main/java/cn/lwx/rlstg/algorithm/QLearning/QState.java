@@ -1,5 +1,7 @@
 package cn.lwx.rlstg.algorithm.QLearning;
 
+import cn.lwx.rlstg.algorithm.Common.Vector2D;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +9,7 @@ import java.util.ArrayList;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/24
+ * Modified Date: 2018/1/25
  * Why & What is modified:
  * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko

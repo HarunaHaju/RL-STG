@@ -1,11 +1,11 @@
-package cn.lwx.rlstg.algorithm.QLearning;
+package cn.lwx.rlstg.algorithm.Common;
 
 /**
  * Package: cn.lwx.rlstg.algorithm.QLearning
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/24
+ * Modified Date: 2018/1/25
  * Why & What is modified:
  * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko
