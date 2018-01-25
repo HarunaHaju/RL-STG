@@ -38,9 +38,9 @@ public class LiveFirst extends Controller {
         Collections.sort(bulletVectors);
 
         //if list have 10 more bullets, keep shortest five one and delete others.
-        if(bulletVectors.size() > 10) {
+        if(bulletVectors.size() > 3) {
             ArrayList<Vector2D> removeList = new ArrayList<>();
-            int maxDistance = bulletVectors.get(4).getDistance();
+            int maxDistance = bulletVectors.get(2).getDistance();
             bulletVectors.forEach(bullet->{
                 if(bullet.getDistance() > maxDistance)
                     removeList.add(bullet);
@@ -53,6 +53,7 @@ public class LiveFirst extends Controller {
 
     @Override
     public int decide() {
+        //prevent empty state
         if (this.state.size() == 0){
             return (int) (Math.random() * GlobalManager.ACTION_COUNT);
         }

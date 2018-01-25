@@ -25,12 +25,13 @@ public class GlobalManager implements StepPerFrame {
     private ConcurrentLinkedQueue<Enemy> enemies;
     private ConcurrentLinkedQueue<Bullet> bullets;
 
-    //4 action of player
-    public static final int ACTION_COUNT = 4;
+    //5 action of player
+    public static final int ACTION_COUNT = 5;
     public static final int ACTION_MOVE_UP = 0;
     public static final int ACTION_MOVE_DOWN = 1;
     public static final int ACTION_MOVE_LEFT = 2;
     public static final int ACTION_MOVE_RIGHT = 3;
+    public static final int ACTION_DO_NOTHING = 4;
 
     private Controller controller;
 
@@ -68,7 +69,7 @@ public class GlobalManager implements StepPerFrame {
 
     private void randomGenerateEnemy(){
         if(enemies.size() < MAX_ENEMY_SIZE){
-            int newEnemyCount = (int)(Math.random() * (5 - enemies.size())) + 1;
+            int newEnemyCount = (int)(Math.random() * (MAX_ENEMY_SIZE - enemies.size())) + 1;
             for (int i = 0; i < newEnemyCount; i++) {
                 Enemy enemy = new Enemy();
                 enemies.add(enemy);
@@ -112,10 +113,6 @@ public class GlobalManager implements StepPerFrame {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public ConcurrentLinkedQueue<Enemy> getEnemies() {

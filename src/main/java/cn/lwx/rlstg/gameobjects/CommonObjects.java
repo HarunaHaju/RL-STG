@@ -51,6 +51,8 @@ abstract class CommonObjects implements StepPerFrame {
             case GlobalManager.ACTION_MOVE_RIGHT:
                 moveRight();
                 break;
+            case GlobalManager.ACTION_DO_NOTHING:
+                break;
             default:
                 break;
         }
