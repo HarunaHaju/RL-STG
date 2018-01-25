@@ -21,8 +21,11 @@ import java.awt.image.BufferedImage;
 public class Player extends CommonObjects {
     private BufferedImage image;
 
-    private static final int THREAD_TIME = 15;//per 15 frames
-    private int count = 0;
+    private static final int SHOT_SPAN = 15;//shot 1 time per 15 frames
+    private int shotCount = 0;
+
+    private static final int MOVE_SPAN = 5;//move may change per 5 frames
+    private int moveCount = 0;
 
     public Player() {
         super(220, 640, 3, 5);
@@ -65,11 +68,14 @@ public class Player extends CommonObjects {
     public void step() {
         judgeGetShot();
         this.move();
-        count++;
-        if(count == THREAD_TIME){
-            count = 0;
+        shotCount++;
+        moveCount++;
+        if(shotCount == SHOT_SPAN){
+            shotCount = 0;
             this.shot();
-
+        }
+        if(moveCount == MOVE_SPAN){
+            moveCount = 0;
             //update state
             switch (GlobalManager.GLOBAL_MANAGER.getController().getFlag()){
                 case Controller.ALGORITHM_QLEARNING:

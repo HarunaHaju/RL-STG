@@ -92,7 +92,7 @@ public class GlobalManager implements StepPerFrame {
                 if (controller.getFlag() == Controller.ALGORITHM_QLEARNING){
                     ((QLearning)(controller)).learn(player.getAction(),10);
                 }
-                score += 10;
+                score ++;
                 enemies.remove(enemy);
             }
         });
@@ -117,7 +117,6 @@ public class GlobalManager implements StepPerFrame {
             if (controller.getFlag() == Controller.ALGORITHM_QLEARNING){
                 ((QLearning)(controller)).learn(player.getAction(),1);
             }
-            score++;
         }
         removeDeadEnemies();
     }
