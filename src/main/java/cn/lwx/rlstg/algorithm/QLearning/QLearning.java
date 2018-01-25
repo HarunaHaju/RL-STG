@@ -13,7 +13,7 @@ import java.util.HashMap;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/24
+ * Modified Date: 2018/1/25
  * Why & What is modified:
  * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -46,10 +46,10 @@ public class QLearning extends Controller {
             if (Math.random() < eGreedy)
                 return QTable.get(nowState).getAction();
             else
-                return (int) (Math.random() * 4);
+                return (int) (Math.random() * GlobalManager.ACTION_COUNT);
         } else {
             QTable.put(nowState, new QValue());
-            return (int) (Math.random() * 4);
+            return (int) (Math.random() * GlobalManager.ACTION_COUNT);
         }
     }
 
