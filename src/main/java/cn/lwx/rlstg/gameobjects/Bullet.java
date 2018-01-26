@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
  * Create Date: 2017/12/24
  * Modified Date: 2018/01/24
  * Why & What is modified:
- * Version: 1.0.0
+ * Version: 1.1.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class Bullet implements StepPerFrame {

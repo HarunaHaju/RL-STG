@@ -10,7 +10,7 @@ import cn.lwx.rlstg.interfaces.StepPerFrame;
  * Create Date: 2017/12/18
  * Modified Date: 2018/01/25
  * Why & What is modified:
- * Version: 1.0.0
+ * Version: 1.1.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 abstract class CommonObjects implements StepPerFrame {

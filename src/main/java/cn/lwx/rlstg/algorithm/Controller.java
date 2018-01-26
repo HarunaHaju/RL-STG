@@ -7,7 +7,7 @@ package cn.lwx.rlstg.algorithm;
  * Create Date: 2018/1/23
  * Modified Date: 2018/1/25
  * Why & What is modified:
- * Version: 1.0.0
+ * Version: 1.1.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public abstract class Controller {
