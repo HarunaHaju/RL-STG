@@ -13,7 +13,7 @@ import java.util.Collections;
  * Comments: This algorithm aims to live longer
  * Author: lwx
  * Create Date: 2018/1/24
- * Modified Date: 2018/1/25
+ * Modified Date: 2018/1/26
  * Why & What is modified:
  * Version: 1.0.0
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -21,28 +21,31 @@ import java.util.Collections;
 public class LiveFirst extends Controller {
 
     private ArrayList<Vector2D> state;
+    public static final int BULLET_COUNTS = 5;
 
-    public LiveFirst(){
+    public LiveFirst() {
         super(Controller.ALGORITHM_LIVEFIRST);
         state = new ArrayList<>();
     }
 
-    public void updateState(){
+    public void updateState() {
         //add all bullets to list and sort by distance
         ArrayList<Vector2D> bulletVectors = new ArrayList<>();
         GlobalManager.GLOBAL_MANAGER.getBullets().forEach(bullet -> {
-            if(bullet.getFlag() == Bullet.PARENTS_ENEMY)
-                bulletVectors.add(new Vector2D(GlobalManager.GLOBAL_MANAGER.getPlayer().getX() - bullet.getX(),
-                        GlobalManager.GLOBAL_MANAGER.getPlayer().getY() - bullet.getY()));
+            if (bullet.getFlag() == Bullet.PARENTS_ENEMY)
+                bulletVectors.add(new Vector2D(GlobalManager.GLOBAL_MANAGER.getPlayer().getX()
+                        + GlobalManager.GLOBAL_MANAGER.getPlayer().getWidth() / 2 + 1 - bullet.getX(),
+                        GlobalManager.GLOBAL_MANAGER.getPlayer().getY()
+                                + GlobalManager.GLOBAL_MANAGER.getPlayer().getHeight() / 2 + 1 - bullet.getY()));
         });
         Collections.sort(bulletVectors);
 
-        //if list have 10 more bullets, keep shortest five one and delete others.
-        if(bulletVectors.size() > 3) {
+        //if list have 5 more bullets, keep shortest five one and delete others.
+        if (bulletVectors.size() > BULLET_COUNTS) {
             ArrayList<Vector2D> removeList = new ArrayList<>();
-            int maxDistance = bulletVectors.get(2).getDistance();
-            bulletVectors.forEach(bullet->{
-                if(bullet.getDistance() > maxDistance)
+            int maxDistance = bulletVectors.get(BULLET_COUNTS - 1).getDistance();
+            bulletVectors.forEach(bullet -> {
+                if (bullet.getDistance() > maxDistance)
                     removeList.add(bullet);
             });
             bulletVectors.removeAll(removeList);
@@ -54,9 +57,53 @@ public class LiveFirst extends Controller {
     @Override
     public int decide() {
         //prevent empty state
-        if (this.state.size() == 0){
+        if (this.state.size() == 0) {
             return (int) (Math.random() * GlobalManager.ACTION_COUNT);
         }
-        return 0;
+
+        //if a bullet come too close, ignore others
+        if (state.get(0).getGeometricDistance() < 20) {
+            if (Math.abs(state.get(0).getX()) > Math.abs(state.get(0).getY())) {
+                if (state.get(0).getX() < 0) {
+                    return GlobalManager.ACTION_MOVE_LEFT;
+                } else {
+                    return GlobalManager.ACTION_MOVE_RIGHT;
+                }
+            } else {
+                if (state.get(0).getY() < 0) {
+                    return GlobalManager.ACTION_MOVE_UP;
+                } else {
+                    return GlobalManager.ACTION_MOVE_DOWN;
+                }
+            }
+        }
+
+        //judge action by closest bullets, the target is dodging the bullet and live longer
+        //dodge bullet by moving to the negative direction of bullets
+        double totalWeight = 0;
+        double xWeight = 0;
+        double yWeight = 0;
+        for (int i = 0; i < state.size(); i++) {
+            totalWeight += 1.0 / state.get(i).getGeometricDistance();
+        }
+        for (int i = 0; i < state.size(); i++) {
+            xWeight += (double)state.get(i).getX() * 1.0 / state.get(i).getGeometricDistance() / totalWeight;
+            yWeight += (double)state.get(i).getY() * 1.0 / state.get(i).getGeometricDistance() / totalWeight;
+        }
+        if (Math.abs(xWeight) == Math.abs(yWeight))
+            return GlobalManager.ACTION_DO_NOTHING;
+        if (Math.abs(xWeight) > Math.abs(yWeight)) {
+            if (xWeight < 0) {
+                return GlobalManager.ACTION_MOVE_LEFT;
+            } else {
+                return GlobalManager.ACTION_MOVE_RIGHT;
+            }
+        } else {
+            if (yWeight < 0) {
+                return GlobalManager.ACTION_MOVE_UP;
+            } else {
+                return GlobalManager.ACTION_MOVE_DOWN;
+            }
+        }
     }
 }
