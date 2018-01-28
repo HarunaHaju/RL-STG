@@ -14,15 +14,17 @@ import java.util.HashMap;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/25
+ * Modified Date: 2018/1/28
  * Why & What is modified:
  * Version: 1.1.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class QLearning extends Controller {
-    private double eGreedy;
-    private double learningRate;
-    private double rewardDecay;
+    private static final double E_GREEDY = 0.9;
+    private static final double LEARNING_RATE = 0.01;
+    private static final double REWARD_DECAY = 0.9;
+    private static final int MAX_ENEMY_COUNT = 2;
+    private static final int MAX_BULLET_COUNT = 2;
 
     private HashMap<QState, QValue> QTable;//state-value pair
 
@@ -35,16 +37,12 @@ public class QLearning extends Controller {
 
         lastState = new QState();
         nowState = new QState();
-
-        eGreedy = 0.9;
-        learningRate = 0.01;
-        rewardDecay = 0.9;
     }
 
     @Override
     public int decide() {
         if (QTable.containsKey(nowState)) {
-            if (Math.random() < eGreedy)
+            if (Math.random() < E_GREEDY)
                 return QTable.get(nowState).getAction();
             else
                 return (int) (Math.random() * GlobalManager.ACTION_COUNT);
@@ -59,8 +57,8 @@ public class QLearning extends Controller {
             if (action == -1)
                 return;
             double qPredict = QTable.get(lastState).getValue(action);
-            double qTarget = reward + rewardDecay * qPredict;
-            QTable.get(lastState).setValue(action, qPredict + learningRate * (qTarget - qPredict));
+            double qTarget = reward + REWARD_DECAY * qPredict;
+            QTable.get(lastState).setValue(action, qPredict + LEARNING_RATE * (qTarget - qPredict));
         } else {
             QTable.put(lastState, new QValue());
         }
@@ -75,6 +73,17 @@ public class QLearning extends Controller {
         });
         Collections.sort(enemyVectors);
 
+        //if list have 2 more enemies, keep shortest two and delete others.
+        if(enemyVectors.size() > MAX_ENEMY_COUNT) {
+            ArrayList<Vector2D> removeList = new ArrayList<>();
+            int maxDistance = enemyVectors.get(MAX_ENEMY_COUNT - 1).getDistance();
+            enemyVectors.forEach(bullet->{
+                if(bullet.getDistance() > maxDistance)
+                    removeList.add(bullet);
+            });
+            enemyVectors.removeAll(removeList);
+        }
+
         //add all bullets to list and sort by distance
         ArrayList<Vector2D> bulletVectors = new ArrayList<>();
         GlobalManager.GLOBAL_MANAGER.getBullets().forEach(bullet -> {
@@ -84,10 +93,10 @@ public class QLearning extends Controller {
         });
         Collections.sort(bulletVectors);
 
-        //if list have 5 more bullets, keep shortest five one and delete others.
-        if(bulletVectors.size() > 5) {
+        //if list have 2 more bullets, keep shortest two and delete others.
+        if(bulletVectors.size() > MAX_BULLET_COUNT) {
             ArrayList<Vector2D> removeList = new ArrayList<>();
-            int maxDistance = bulletVectors.get(4).getDistance();
+            int maxDistance = bulletVectors.get(MAX_BULLET_COUNT - 1).getDistance();
             bulletVectors.forEach(bullet->{
                 if(bullet.getDistance() > maxDistance)
                     removeList.add(bullet);
