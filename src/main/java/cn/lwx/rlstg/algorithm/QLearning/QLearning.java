@@ -14,12 +14,13 @@ import java.util.HashMap;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/28
+ * Modified Date: 2018/1/30
  * Why & What is modified:
  * Version: 1.1.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class QLearning extends Controller {
+    //hyper parameters
     private static final double E_GREEDY = 0.9;
     private static final double LEARNING_RATE = 0.01;
     private static final double REWARD_DECAY = 0.9;
