@@ -1,6 +1,7 @@
 package cn.lwx.rlstg.algorithm.QNetwork;
 
 
+import cn.lwx.rlstg.algorithm.Controller;
 import org.encog.Encog;
 import org.encog.engine.network.activation.ActivationReLU;
 import org.encog.engine.network.activation.ActivationSigmoid;
@@ -18,12 +19,12 @@ import org.encog.neural.networks.training.propagation.resilient.ResilientPropaga
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/28
- * Modified Date: 2018/1/29
+ * Modified Date: 2018/1/30
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
-public class QNetwork {
+public class QNetwork extends Controller {
     //hyper parameters
     private static final double GAMMA = 0.9;//discount factor for target Q
     private static final double INITIAL_EPSILON = 0.5;//starting value of epsilon
@@ -34,6 +35,7 @@ public class QNetwork {
 
 
     public QNetwork(){
+        super(0);
         qNetwork = new BasicNetwork();
 
         //add layer
@@ -48,6 +50,11 @@ public class QNetwork {
         qNetwork.getStructure().finalizeStructure();
         qNetwork.reset();
 
+    }
+
+    @Override
+    public int decide() {
+        return 0;
     }
 
     public void train(){
