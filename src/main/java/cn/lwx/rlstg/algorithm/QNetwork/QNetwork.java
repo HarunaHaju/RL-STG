@@ -35,9 +35,8 @@ public class QNetwork extends Controller {
 
 
     public QNetwork(){
-        super(0);
+        super(Controller.ALGORITHM_QNETWORK);
         qNetwork = new BasicNetwork();
-
         //add layer
         //parameter 1 means activation function, parameter 2 means bias, parameter 3 means neuron size
         //input layer have 16 neurons
