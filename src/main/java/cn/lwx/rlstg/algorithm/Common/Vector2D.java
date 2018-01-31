@@ -5,14 +5,18 @@ package cn.lwx.rlstg.algorithm.Common;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/25
+ * Modified Date: 2018/1/31
  * Why & What is modified:
  * Version: 1.1.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
-public class Vector2D implements Comparable<Vector2D>{
+public class Vector2D implements Comparable<Vector2D> {
     private int x;
     private int y;
+
+    //those value used for normalize
+    public static int MAX_VALUE_X = 480;
+    public static int MAX_VALUE_Y = 700;
 
     public Vector2D() {
         x = 0;
@@ -20,8 +24,10 @@ public class Vector2D implements Comparable<Vector2D>{
     }
 
     public Vector2D(int x, int y) {
-        this.x = x;
-        this.y = y;
+        if (x <= MAX_VALUE_X && y <= MAX_VALUE_Y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 
     public int getX() {
@@ -41,17 +47,17 @@ public class Vector2D implements Comparable<Vector2D>{
     }
 
     public int getDistance() {
-        return (int) Math.pow(this.getX(),2) + (int) Math.pow(this.getY(),2);
+        return (int) Math.pow(this.getX(), 2) + (int) Math.pow(this.getY(), 2);
     }
 
-    public double getGeometricDistance(){
-        return Math.sqrt(Math.pow(this.getX(),2) + Math.pow(this.getY(),2));
+    public double getGeometricDistance() {
+        return Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2));
     }
 
     @Override
     public int compareTo(Vector2D vec) {
         //find for closest vector
-        if(vec.getDistance() > this.getDistance())
+        if (vec.getDistance() > this.getDistance())
             return -1;
         else
             return 1;
@@ -64,11 +70,11 @@ public class Vector2D implements Comparable<Vector2D>{
 
     @Override
     public boolean equals(Object o) {
-        if(o == null || o.getClass() != this.getClass())
+        if (o == null || o.getClass() != this.getClass())
             return false;
-        if(this == o)
+        if (this == o)
             return true;
         Vector2D vec = (Vector2D) o;
-        return(x==vec.getX() && y==vec.getY());
+        return (x == vec.getX() && y == vec.getY());
     }
 }

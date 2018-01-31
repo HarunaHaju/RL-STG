@@ -4,6 +4,8 @@ import cn.lwx.rlstg.algorithm.Common.Vector2D;
 import cn.lwx.rlstg.algorithm.QNetwork.QNetwork;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
+import org.encog.util.arrayutil.NormalizationAction;
+import org.encog.util.arrayutil.NormalizedField;
 
 import java.util.ArrayList;
 import java.util.Vector;
@@ -20,6 +22,11 @@ import java.util.Vector;
  */
 public class QState {
     private ArrayList<ArrayList<Vector2D>> lists;
+
+    private static final NormalizedField normalizerX =
+            new NormalizedField(NormalizationAction.Normalize, "x", Vector2D.MAX_VALUE_X, 0, 1, 0);
+    private static final NormalizedField normalizerY =
+            new NormalizedField(NormalizationAction.Normalize, "y", Vector2D.MAX_VALUE_Y, 0, 1, 0);
 
     public QState(ArrayList<Vector2D> bulletDeltaVectors, ArrayList<Vector2D> enemyDeltaVectors) {
         lists = new ArrayList<>();
@@ -42,16 +49,16 @@ public class QState {
         }
 
         //add all data into an ArrayList
-        ArrayList<Integer> unNormalizedData = new ArrayList<>();
+        ArrayList<Double> normalizedData = new ArrayList<>();
         lists.forEach(list -> {
             list.forEach(vector -> {
-                unNormalizedData.add(vector.getX());
-                unNormalizedData.add(vector.getY());
+                normalizedData.add(normalizerX.normalize((double) vector.getX()));
+                normalizedData.add(normalizerY.normalize((double) vector.getY()));
             });
         });
 
-        for (int i = 0; i < unNormalizedData.size(); i++) {
-            tempArray[i] = unNormalizedData.get(i);
+        for (int i = 0; i < normalizedData.size(); i++) {
+            tempArray[i] = normalizedData.get(i);
         }
 
         return new BasicMLData(tempArray);
