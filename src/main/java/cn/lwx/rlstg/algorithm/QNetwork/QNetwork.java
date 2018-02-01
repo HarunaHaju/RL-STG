@@ -36,8 +36,7 @@ import java.util.Collections;
 public class QNetwork extends Controller {
     //hyper parameters
     private static final double GAMMA = 0.9;//discount factor for target Q
-    private static final double INITIAL_EPSILON = 0.5;//starting value of epsilon
-    private static final double FINAL_EPSILON = 0.01;//final value of epsilon
+    private static final double EPSILON = 0.8;//final value of epsilon
     private static final int REPLAY_SIZE = 100;//experience replay buffer size
     private static final int MAX_ENEMY_COUNT = 4;
     private static final int MAX_BULLET_COUNT = 4;
@@ -45,7 +44,7 @@ public class QNetwork extends Controller {
     public static final int INPUT_SIZE = MAX_ENEMY_COUNT * 2 + MAX_BULLET_COUNT * 2;
 
     private BasicNetwork qNetwork;
-    private double epsilon;
+    private QState lastState;
     private QState nowState;
     private boolean isTrainingDone;
 
@@ -64,14 +63,16 @@ public class QNetwork extends Controller {
         qNetwork.getStructure().finalizeStructure();
         qNetwork.reset();
 
-        epsilon = INITIAL_EPSILON;
         isTrainingDone = false;
         nowState = new QState();
+        lastState = new QState();
     }
 
     @Override
     public int decide() {
-        return isTrainingDone?action():egreedyAction();
+        if (isTrainingDone || Math.random() < EPSILON)
+            return getActionFromData(qNetwork.compute(stateToData(nowState)));
+        return (int) (Math.random() * GlobalManager.ACTION_COUNT);
     }
 
     public void train() {
@@ -82,6 +83,9 @@ public class QNetwork extends Controller {
 
         //init train method
         Backpropagation train = new Backpropagation(qNetwork, trainingSet);
+
+        if (train.getError() < 0.001)
+            isTrainingDone = true;
     }
 
     public void updateState(){
@@ -125,23 +129,12 @@ public class QNetwork extends Controller {
         }
 
         //update state
+        lastState = nowState;
         nowState = new QState(bulletVectors,enemyVectors);
 
         //add state to training set
 
         //check for train
-    }
-
-    private int action() {
-        return getActionFromData(qNetwork.compute(stateToData(nowState)));
-    }
-
-    private int egreedyAction() {
-        if (Math.random() < epsilon) {
-            return getActionFromData(qNetwork.compute(stateToData(nowState)));
-        } else {
-            return (int) (Math.random() * GlobalManager.ACTION_COUNT);
-        }
     }
 
     public void checkReplay() {
