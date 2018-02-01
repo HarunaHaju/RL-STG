@@ -47,6 +47,7 @@ public class QNetwork extends Controller {
     private QState lastState;
     private QState nowState;
     private boolean isTrainingDone;
+    private int reward;
 
     public QNetwork() {
         super(Controller.ALGORITHM_QNETWORK);
@@ -66,6 +67,7 @@ public class QNetwork extends Controller {
         isTrainingDone = false;
         nowState = new QState();
         lastState = new QState();
+        reward = 0;
     }
 
     @Override
@@ -129,12 +131,18 @@ public class QNetwork extends Controller {
         }
 
         //update state
+
         lastState = nowState;
         nowState = new QState(bulletVectors,enemyVectors);
 
         //add state to training set
-
+        if (lastState.getLists().size()>0 && nowState.getLists().size()>0){
+            //add
+        }
         //check for train
+
+        //reset reward
+        reward = 0;
     }
 
     public void checkReplay() {
