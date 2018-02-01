@@ -47,6 +47,7 @@ public class QNetwork extends Controller {
     private BasicNetwork qNetwork;
     private double epsilon;
     private QState nowState;
+    private boolean isTrainingDone;
 
     public QNetwork() {
         super(Controller.ALGORITHM_QNETWORK);
@@ -64,12 +65,13 @@ public class QNetwork extends Controller {
         qNetwork.reset();
 
         epsilon = INITIAL_EPSILON;
+        isTrainingDone = false;
         nowState = new QState();
     }
 
     @Override
     public int decide() {
-        return 0;
+        return isTrainingDone?action():egreedyAction();
     }
 
     public void train() {
