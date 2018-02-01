@@ -3,6 +3,7 @@ package cn.lwx.rlstg.gameobjects;
 import cn.lwx.rlstg.GlobalManager;
 import cn.lwx.rlstg.algorithm.Controller;
 import cn.lwx.rlstg.algorithm.QLearning.QLearning;
+import cn.lwx.rlstg.algorithm.QNetwork.QNetwork;
 import cn.lwx.rlstg.algorithm.RuleBased.LiveFirst;
 
 import javax.imageio.ImageIO;
@@ -13,7 +14,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/01/25
+ * Modified Date: 2018/2/1
  * Why & What is modified:
  * Version: 1.1.0
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -83,6 +84,9 @@ public class Player extends CommonObjects {
                     break;
                 case Controller.ALGORITHM_LIVEFIRST:
                     ((LiveFirst)GlobalManager.GLOBAL_MANAGER.getController()).updateState();
+                    break;
+                case Controller.ALGORITHM_QNETWORK:
+                    ((QNetwork)GlobalManager.GLOBAL_MANAGER.getController()).updateState();
                     break;
                 default:
                     break;
