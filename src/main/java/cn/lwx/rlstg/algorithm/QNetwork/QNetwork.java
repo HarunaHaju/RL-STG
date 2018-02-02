@@ -44,10 +44,13 @@ public class QNetwork extends Controller {
     public static final int INPUT_SIZE = MAX_ENEMY_COUNT * 2 + MAX_BULLET_COUNT * 2;
 
     private BasicNetwork qNetwork;
-    private QState lastState;
+    private QState nextState;
     private QState nowState;
     private boolean isTrainingDone;
     private int reward;
+
+    private ArrayList<ArrayList<Double>> trainDataInput;
+    private ArrayList<ArrayList<Double>> trainDataOutput;
 
     public QNetwork() {
         super(Controller.ALGORITHM_QNETWORK);
@@ -66,7 +69,7 @@ public class QNetwork extends Controller {
 
         isTrainingDone = false;
         nowState = new QState();
-        lastState = new QState();
+        nextState = new QState();
         reward = 0;
     }
 
@@ -131,26 +134,39 @@ public class QNetwork extends Controller {
         }
 
         //update state
-
-        lastState = nowState;
-        nowState = new QState(bulletVectors,enemyVectors);
+        nowState = nextState;
+        nextState = new QState(bulletVectors,enemyVectors);
 
         //add state to training set
-        if (lastState.getLists().size()>0 && nowState.getLists().size()>0){
-            //add
-        }
+        makeTrainingData();
+
         //check for train
+        checkReplay();
 
         //reset reward
         reward = 0;
     }
 
-    public void checkReplay() {
-
+    private void checkReplay() {
+        if (trainDataInput.size() >= REPLAY_SIZE){
+            this.train();
+        }
     }
 
     public void gainReward(int reward){
         this.reward += reward;
+    }
+
+    private void makeTrainingData(){
+        if (nextState.getLists().size()>0 && nowState.getLists().size()>0){
+            trainDataInput.add(nowState.stateToArray());
+            ArrayList<Double> outputList = new ArrayList<>();
+            MLData output = qNetwork.compute(nextState.stateToData());
+            for (int i = 0; i < output.size(); i++) {
+                outputList.add(output.getData(i));
+            }
+            trainDataOutput.add(outputList);
+        }
     }
 
     private MLData stateToData(QState state) {

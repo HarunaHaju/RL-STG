@@ -15,7 +15,7 @@ import java.util.Vector;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/31
+ * Modified Date: 2018/2/2
  * Why & What is modified:
  * Version: 1.1.0
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -62,6 +62,24 @@ public class QState {
         }
 
         return new BasicMLData(tempArray);
+    }
+
+    public ArrayList<Double> stateToArray() {
+        //add all data into an ArrayList
+        ArrayList<Double> normalizedData = new ArrayList<>();
+        lists.forEach(list -> {
+            list.forEach(vector -> {
+                normalizedData.add(normalizerX.normalize((double) vector.getX()));
+                normalizedData.add(normalizerY.normalize((double) vector.getY()));
+            });
+        });
+
+        //filled with zero
+        while (normalizedData.size() < QNetwork.INPUT_SIZE) {
+            normalizedData.add(0.0);
+        }
+
+        return normalizedData;
     }
 
     @Override
