@@ -81,13 +81,30 @@ public class QNetwork extends Controller {
     }
 
     public void train() {
-        //todo:add state -> set method
+        double[][] inputData = new double[REPLAY_SIZE][INPUT_SIZE];
+        double[][] outputData = new double[REPLAY_SIZE][GlobalManager.ACTION_COUNT];
+
+        for (int i = 0; i < REPLAY_SIZE; i++) {
+            for (int j = 0; j < INPUT_SIZE; j++) {
+                inputData[i][j] = trainDataInput.get(i).get(j);
+            }
+        }
+
+        for (int i = 0; i < REPLAY_SIZE; i++) {
+            for (int j = 0; j < GlobalManager.ACTION_COUNT; j++) {
+                outputData[i][j] = trainDataOutput.get(i).get(j);
+            }
+        }
 
         //init train set
-        MLDataSet trainingSet = new BasicMLDataSet();
+        MLDataSet trainingSet = new BasicMLDataSet(inputData,outputData);
 
         //init train method
         Backpropagation train = new Backpropagation(qNetwork, trainingSet);
+
+        for (int i = 0; i < REPLAY_SIZE; i++) {
+            train.iteration();
+        }
 
         if (train.getError() < 0.001)
             isTrainingDone = true;
