@@ -28,7 +28,7 @@ import java.util.Collections;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/28
- * Modified Date: 2018/2/1
+ * Modified Date: 2018/2/2
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -147,6 +147,10 @@ public class QNetwork extends Controller {
 
     public void checkReplay() {
 
+    }
+
+    public void gainReward(int reward){
+        this.reward += reward;
     }
 
     private MLData stateToData(QState state) {

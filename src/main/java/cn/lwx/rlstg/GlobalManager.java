@@ -2,6 +2,7 @@ package cn.lwx.rlstg;
 
 import cn.lwx.rlstg.algorithm.Controller;
 import cn.lwx.rlstg.algorithm.QLearning.QLearning;
+import cn.lwx.rlstg.algorithm.QNetwork.QNetwork;
 import cn.lwx.rlstg.algorithm.RuleBased.LiveFirst;
 import cn.lwx.rlstg.gameobjects.Bullet;
 import cn.lwx.rlstg.gameobjects.Enemy;
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/20
- * Modified Date: 2018/1/25
+ * Modified Date: 2018/2/2
  * Why & What is modified:
  * Version: 1.1.0
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -89,8 +90,15 @@ public class GlobalManager implements StepPerFrame {
     private void removeDeadEnemies(){
         enemies.forEach(enemy -> {
             if(!enemy.isAlive()) {
-                if (controller.getFlag() == Controller.ALGORITHM_QLEARNING){
-                    ((QLearning)(controller)).learn(player.getAction(),10);
+                switch (controller.getFlag()){
+                    case Controller.ALGORITHM_QLEARNING:
+                        ((QLearning)(controller)).learn(player.getAction(), 10);
+                        break;
+                    case Controller.ALGORITHM_QNETWORK:
+                        ((QNetwork)(controller)).gainReward(10);
+                        break;
+                    default:
+                        break;
                 }
                 score ++;
                 enemies.remove(enemy);
@@ -109,13 +117,27 @@ public class GlobalManager implements StepPerFrame {
         bullets.forEach(Bullet::step);
         enemies.forEach(Enemy::step);
         if (!player.isAlive()){
-            if (controller.getFlag() == Controller.ALGORITHM_QLEARNING){
-                ((QLearning)(controller)).learn(player.getAction(),-1000);
+            switch (controller.getFlag()){
+                case Controller.ALGORITHM_QLEARNING:
+                    ((QLearning)(controller)).learn(player.getAction(), -100);
+                    break;
+                case Controller.ALGORITHM_QNETWORK:
+                    ((QNetwork)(controller)).gainReward(-100);
+                    break;
+                default:
+                    break;
             }
             this.reset();
         } else {
-            if (controller.getFlag() == Controller.ALGORITHM_QLEARNING){
-                ((QLearning)(controller)).learn(player.getAction(),1);
+            switch (controller.getFlag()){
+                case Controller.ALGORITHM_QLEARNING:
+                    ((QLearning)(controller)).learn(player.getAction(), 1);
+                    break;
+                case Controller.ALGORITHM_QNETWORK:
+                    ((QNetwork)(controller)).gainReward(1);
+                    break;
+                default:
+                    break;
             }
         }
         removeDeadEnemies();
