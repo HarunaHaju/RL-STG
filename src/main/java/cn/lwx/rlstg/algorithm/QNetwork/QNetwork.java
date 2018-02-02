@@ -37,7 +37,7 @@ public class QNetwork extends Controller {
     //hyper parameters
     private static final double GAMMA = 0.9;//discount factor for target Q
     private static final double EPSILON = 0.8;//final value of epsilon
-    private static final int REPLAY_SIZE = 100;//experience replay buffer size
+    private static final int REPLAY_SIZE = 32;//experience replay buffer size
     private static final int MAX_ENEMY_COUNT = 4;
     private static final int MAX_BULLET_COUNT = 4;
 
@@ -147,6 +147,11 @@ public class QNetwork extends Controller {
         reward = 0;
     }
 
+    public void clearTrainingData(){
+        nowState = new QState();
+        nextState = new QState();
+    }
+
     private void checkReplay() {
         if (trainDataInput.size() >= REPLAY_SIZE){
             this.train();
@@ -162,8 +167,9 @@ public class QNetwork extends Controller {
             trainDataInput.add(nowState.stateToArray());
             ArrayList<Double> outputList = new ArrayList<>();
             MLData output = qNetwork.compute(nextState.stateToData());
+            double qvalue = output.getData(getActionFromData(output));
             for (int i = 0; i < output.size(); i++) {
-                outputList.add(output.getData(i));
+                outputList.add(reward + GAMMA * qvalue);
             }
             trainDataOutput.add(outputList);
         }

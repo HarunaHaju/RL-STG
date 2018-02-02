@@ -75,6 +75,9 @@ public class GlobalManager implements StepPerFrame {
         player.reset();
         enemies.clear();
         bullets.clear();
+        if (controller.getFlag() == Controller.ALGORITHM_QNETWORK){
+            ((QNetwork)controller).clearTrainingData();
+        }
     }
 
     private void randomGenerateEnemy(){
