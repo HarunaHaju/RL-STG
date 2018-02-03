@@ -17,16 +17,16 @@ import java.util.Vector;
  * Create Date: 2018/1/17
  * Modified Date: 2018/2/3
  * Why & What is modified:
- * Version: 1.2.1
+ * Version: 1.2.2
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class QState {
     private ArrayList<ArrayList<Vector2D>> lists;
 
     private static final NormalizedField normalizerX =
-            new NormalizedField(NormalizationAction.Normalize, "x", Vector2D.MAX_VALUE_X, 0, 1, 0);
+            new NormalizedField(NormalizationAction.Normalize, "x", Vector2D.MAX_VALUE_X, -Vector2D.MAX_VALUE_X, 1, 0);
     private static final NormalizedField normalizerY =
-            new NormalizedField(NormalizationAction.Normalize, "y", Vector2D.MAX_VALUE_Y, 0, 1, 0);
+            new NormalizedField(NormalizationAction.Normalize, "y", Vector2D.MAX_VALUE_Y, -Vector2D.MAX_VALUE_X, 1, 0);
 
     public QState(ArrayList<Vector2D> bulletDeltaVectors, ArrayList<Vector2D> enemyDeltaVectors) {
         lists = new ArrayList<>();

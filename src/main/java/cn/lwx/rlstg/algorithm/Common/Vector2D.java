@@ -7,7 +7,7 @@ package cn.lwx.rlstg.algorithm.Common;
  * Create Date: 2018/1/17
  * Modified Date: 2018/2/3
  * Why & What is modified:
- * Version: 1.2.1
+ * Version: 1.2.2
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class Vector2D implements Comparable<Vector2D> {
