@@ -58,7 +58,19 @@ abstract class CommonObjects implements StepPerFrame {
         }
     }
 
-    public void judgeGetShot() {
+    public void judgeAlive() {
+        //judge get crashed
+        if(this.flag == CommonObjects.PLAYER){
+            GlobalManager.GLOBAL_MANAGER.getEnemies().forEach(enemy -> {
+                if (enemy.getX() >= this.x + this.getWidth() / 4 &&
+                        enemy.getX() <= this.x + this.getWidth() / 4 * 3 &&
+                        enemy.getY() + enemy.getHeight() >= this.y + this.getHeight() / 4 &&
+                        enemy.getY() <= this.y + this.getHeight() / 4 * 3) {
+                    isAlive = false;
+                }
+            });
+        }
+
         GlobalManager.GLOBAL_MANAGER.getBullets().forEach(bullet -> {
             switch (this.flag) {
                 case PLAYER:
@@ -102,12 +114,11 @@ abstract class CommonObjects implements StepPerFrame {
             case CommonObjects.ENEMY:
                 int yTemp = y + speed;
                 //if enemy come to the bottom, player fail
-                if (yTemp < 700 - height) {
+                if (yTemp < 600 - height) {
                     this.setY(yTemp);
                 } else {
                     GlobalManager.GLOBAL_MANAGER.getPlayer().setAlive(false);
                 }
-                this.setY(y + speed < 700 - height ? y + speed : 700 - height);
                 break;
         }
 

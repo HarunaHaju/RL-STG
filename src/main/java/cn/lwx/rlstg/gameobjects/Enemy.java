@@ -58,7 +58,7 @@ public class Enemy extends CommonObjects {
 
     @Override
     public void step() {
-        judgeGetShot();
+        judgeAlive();
         this.move();
         ++shotCount;
         if (shotCount == THREAD_TIME) {

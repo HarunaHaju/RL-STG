@@ -67,7 +67,7 @@ public class Player extends CommonObjects {
 
     @Override
     public void step() {
-        judgeGetShot();
+        judgeAlive();
         this.move();
         shotCount++;
         moveCount++;
