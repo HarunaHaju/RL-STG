@@ -62,10 +62,10 @@ abstract class CommonObjects implements StepPerFrame {
         //judge get crashed
         if(this.flag == CommonObjects.PLAYER){
             GlobalManager.GLOBAL_MANAGER.getEnemies().forEach(enemy -> {
-                if (enemy.getX() >= this.x + this.getWidth() / 4 &&
-                        enemy.getX() <= this.x + this.getWidth() / 4 * 3 &&
-                        enemy.getY() + enemy.getHeight() >= this.y + this.getHeight() / 4 &&
-                        enemy.getY() <= this.y + this.getHeight() / 4 * 3) {
+                if (enemy.getX() + enemy.getWidth() >= this.x&&
+                        enemy.getX() <= this.x + this.getWidth()&&
+                        enemy.getY() + enemy.getHeight() >= this.y&&
+                        enemy.getY() <= this.y + this.getHeight()) {
                     isAlive = false;
                 }
             });
