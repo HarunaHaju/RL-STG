@@ -28,9 +28,9 @@ import java.util.Collections;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/28
- * Modified Date: 2018/2/2
+ * Modified Date: 2018/2/3
  * Why & What is modified:
- * Version: 0.0.1beta
+ * Version: 1.2.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class QNetwork extends Controller {
@@ -66,6 +66,9 @@ public class QNetwork extends Controller {
         //finalizeStructure method is called to inform the network that no more layers are to be added
         qNetwork.getStructure().finalizeStructure();
         qNetwork.reset();
+
+        trainDataOutput = new ArrayList<>();
+        trainDataInput = new ArrayList<>();
 
         isTrainingDone = false;
         nowState = new QState();
@@ -119,7 +122,7 @@ public class QNetwork extends Controller {
         });
         Collections.sort(enemyVectors);
 
-        //if list have 2 more enemies, keep shortest two and delete others.
+        //if list have more enemies, keep shortest and delete others.
         if(enemyVectors.size() > MAX_ENEMY_COUNT) {
             ArrayList<Vector2D> removeList = new ArrayList<>();
             int maxDistance = enemyVectors.get(MAX_ENEMY_COUNT - 1).getDistance();
@@ -139,7 +142,7 @@ public class QNetwork extends Controller {
         });
         Collections.sort(bulletVectors);
 
-        //if list have 2 more bullets, keep shortest two and delete others.
+        //if list have more bullets, keep shortest and delete others.
         if(bulletVectors.size() > MAX_BULLET_COUNT) {
             ArrayList<Vector2D> removeList = new ArrayList<>();
             int maxDistance = bulletVectors.get(MAX_BULLET_COUNT - 1).getDistance();
@@ -179,7 +182,7 @@ public class QNetwork extends Controller {
         this.reward += reward;
     }
 
-    private void makeTrainingData(){
+    public void makeTrainingData(){
         if (nextState.getLists().size()>0 && nowState.getLists().size()>0){
             trainDataInput.add(nowState.stateToArray());
             ArrayList<Double> outputList = new ArrayList<>();

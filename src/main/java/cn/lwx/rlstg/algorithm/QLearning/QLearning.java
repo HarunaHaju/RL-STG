@@ -14,9 +14,9 @@ import java.util.HashMap;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/1/30
+ * Modified Date: 2018/2/3
  * Why & What is modified:
- * Version: 1.1.0
+ * Version: 1.2.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class QLearning extends Controller {

@@ -15,7 +15,7 @@ import java.util.Collections;
  * Create Date: 2018/1/24
  * Modified Date: 2018/1/26
  * Why & What is modified:
- * Version: 1.1.0
+ * Version: 1.2.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class LiveFirst extends Controller {

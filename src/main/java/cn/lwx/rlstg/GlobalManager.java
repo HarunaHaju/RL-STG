@@ -16,9 +16,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/20
- * Modified Date: 2018/2/2
+ * Modified Date: 2018/2/3
  * Why & What is modified:
- * Version: 1.1.0
+ * Version: 1.2.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class GlobalManager implements StepPerFrame {
@@ -57,6 +57,9 @@ public class GlobalManager implements StepPerFrame {
             case Controller.ALGORITHM_LIVEFIRST:
                 controller = new LiveFirst();
                 break;
+            case Controller.ALGORITHM_QNETWORK:
+                controller = new QNetwork();
+                break;
             default:
                 break;
         }
@@ -76,6 +79,7 @@ public class GlobalManager implements StepPerFrame {
         enemies.clear();
         bullets.clear();
         if (controller.getFlag() == Controller.ALGORITHM_QNETWORK){
+            ((QNetwork)controller).makeTrainingData();
             ((QNetwork)controller).clearTrainingData();
         }
     }

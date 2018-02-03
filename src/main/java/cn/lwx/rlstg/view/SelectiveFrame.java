@@ -8,9 +8,9 @@ import java.awt.*;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/23
- * Modified Date: 2018/1/25
+ * Modified Date: 2018/2/3
  * Why & What is modified:
- * Version: 1.1.0
+ * Version: 1.2.0
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class SelectiveFrame extends JFrame {
@@ -36,6 +36,7 @@ public class SelectiveFrame extends JFrame {
         combo_box.addItem("Q-Learning");
         combo_box.addItem("Random");
         combo_box.addItem("Live First (Rule Based)");
+        combo_box.addItem("Q-Network");
 
         JLabel label2 = new JLabel("Algorithm:");
         label2.setFont(new Font("Helvetica",Font.PLAIN, 16));
