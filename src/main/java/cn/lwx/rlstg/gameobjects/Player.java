@@ -86,7 +86,7 @@ public class Player extends CommonObjects {
                     ((LiveFirst)GlobalManager.GLOBAL_MANAGER.getController()).updateState();
                     break;
                 case Controller.ALGORITHM_QNETWORK:
-                    ((QNetwork)GlobalManager.GLOBAL_MANAGER.getController()).updateState();
+                    ((QNetwork)GlobalManager.GLOBAL_MANAGER.getController()).updateState(this.getAction());
                     break;
                 default:
                     break;

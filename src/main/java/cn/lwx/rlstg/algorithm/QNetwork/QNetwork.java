@@ -47,7 +47,7 @@ public class QNetwork extends Controller {
     private QState nextState;
     private QState nowState;
     private boolean isTrainingDone;
-    private int reward;
+    private double reward;
 
     private ArrayList<ArrayList<Double>> trainDataInput;
     private ArrayList<ArrayList<Double>> trainDataOutput;
@@ -103,17 +103,22 @@ public class QNetwork extends Controller {
         MLDataSet trainingSet = new BasicMLDataSet(inputData,outputData);
 
         //init train method
-        Backpropagation train = new Backpropagation(qNetwork, trainingSet);
+        ResilientPropagation train = new ResilientPropagation (qNetwork, trainingSet);
 
         for (int i = 0; i < REPLAY_SIZE; i++) {
             train.iteration();
         }
 
-        if (train.getError() < 0.001)
+        if (train.getError() < 0.001) {
             isTrainingDone = true;
+        }
+
+        trainingSet.close();
+        trainDataInput.clear();
+        trainDataOutput.clear();
     }
 
-    public void updateState(){
+    public void updateState(int action){
         //add all enemies to list and sort by distance
         ArrayList<Vector2D> enemyVectors = new ArrayList<>();
         GlobalManager.GLOBAL_MANAGER.getEnemies().forEach(enemy -> {
@@ -158,7 +163,7 @@ public class QNetwork extends Controller {
         nextState = new QState(bulletVectors,enemyVectors);
 
         //add state to training set
-        makeTrainingData();
+        makeTrainingData(action);
 
         //check for train
         checkReplay();
@@ -178,18 +183,21 @@ public class QNetwork extends Controller {
         }
     }
 
-    public void gainReward(int reward){
+    public void gainReward(double reward){
         this.reward += reward;
     }
 
-    public void makeTrainingData(){
+    public void makeTrainingData(int action){
         if (nextState.getLists().size()>0 && nowState.getLists().size()>0){
             trainDataInput.add(nowState.stateToArray());
             ArrayList<Double> outputList = new ArrayList<>();
             MLData output = qNetwork.compute(nextState.stateToData());
             double qvalue = output.getData(getActionFromData(output));
             for (int i = 0; i < output.size(); i++) {
-                outputList.add(reward + GAMMA * qvalue);
+                if (i == action)
+                    outputList.add(reward + GAMMA * qvalue);
+                else
+                    outputList.add(GAMMA * qvalue);
             }
             trainDataOutput.add(outputList);
         }

@@ -79,7 +79,7 @@ public class GlobalManager implements StepPerFrame {
         enemies.clear();
         bullets.clear();
         if (controller.getFlag() == Controller.ALGORITHM_QNETWORK){
-            ((QNetwork)controller).makeTrainingData();
+            ((QNetwork)controller).makeTrainingData(player.getAction());
             ((QNetwork)controller).clearTrainingData();
         }
     }
@@ -141,7 +141,7 @@ public class GlobalManager implements StepPerFrame {
                     ((QLearning)(controller)).learn(player.getAction(), 1);
                     break;
                 case Controller.ALGORITHM_QNETWORK:
-                    ((QNetwork)(controller)).gainReward(1);
+                    ((QNetwork)(controller)).gainReward(-0.01);
                     break;
                 default:
                     break;
