@@ -16,7 +16,7 @@ import java.awt.event.KeyListener;
  * Create Date: 2017/12/19
  * Modified Date: 2018/2/3
  * Why & What is modified:
- * Version: 1.2.0
+ * Version: 1.2.1
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 class GamePanel extends JPanel implements StepPerFrame {
