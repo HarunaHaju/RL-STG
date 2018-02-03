@@ -59,9 +59,10 @@ public class QNetwork extends Controller {
         //parameter 1 means activation function, parameter 2 means bias, parameter 3 means neuron size
         //input layer have 16 neurons
         qNetwork.addLayer(new BasicLayer(null, true, INPUT_SIZE));
-        qNetwork.addLayer(new BasicLayer(new ActivationReLU(), true, 8));
-        qNetwork.addLayer(new BasicLayer(new ActivationReLU(), true, 6));
-        qNetwork.addLayer(new BasicLayer(new ActivationReLU(), false, GlobalManager.ACTION_COUNT));
+        qNetwork.addLayer(new BasicLayer(new ActivationReLU(-15,-15), true, 20));
+        qNetwork.addLayer(new BasicLayer(new ActivationReLU(-15,-15), true, 10));
+        //output layer have 5 neurons
+        qNetwork.addLayer(new BasicLayer(new ActivationReLU(-15,-15), false, GlobalManager.ACTION_COUNT));
 
         //finalizeStructure method is called to inform the network that no more layers are to be added
         qNetwork.getStructure().finalizeStructure();
