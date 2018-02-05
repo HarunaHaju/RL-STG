@@ -1,6 +1,7 @@
 package cn.lwx.rlstg;
 
 import cn.lwx.rlstg.algorithm.Controller;
+import cn.lwx.rlstg.algorithm.MCTS.MCTS;
 import cn.lwx.rlstg.algorithm.QLearning.QLearning;
 import cn.lwx.rlstg.algorithm.QNetwork.QNetwork;
 import cn.lwx.rlstg.algorithm.RuleBased.LiveFirst;
@@ -16,7 +17,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/20
- * Modified Date: 2018/2/3
+ * Modified Date: 2018/2/5
  * Why & What is modified:
  * Version: 1.2.2
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -59,6 +60,9 @@ public class GlobalManager implements StepPerFrame {
                 break;
             case Controller.ALGORITHM_QNETWORK:
                 controller = new QNetwork();
+                break;
+            case Controller.ALGORITHM_MCTS:
+                controller = new MCTS();
                 break;
             default:
                 break;
