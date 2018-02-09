@@ -2,10 +2,7 @@ package cn.lwx.rlstg.algorithm.MCTS;
 
 import cn.lwx.rlstg.GlobalManager;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Package: cn.lwx.rlstg.algorithm.MCTS
@@ -53,6 +50,10 @@ public class TreeNode {
         }
     }
 
+    private void randomSimulation() {
+
+    }
+
     private void backPropagation() {
         TreeNode cur = this;
         while (cur != null) {
@@ -61,8 +62,16 @@ public class TreeNode {
         }
     }
 
-    private void randomSimulation() {
-
+    private int selectAction() {
+        int bestIndex = -1;
+        double maxValue = Double.MIN_VALUE;
+        for (TreeNode node : children) {
+            if(node.getUCB() > maxValue){
+                maxValue = node.getUCB();
+                bestIndex = node.getIndex();
+            }
+        }
+        return bestIndex;
     }
 
     private double getUCB() {
@@ -119,42 +128,20 @@ public class TreeNode {
         return totalValue == node.getTotalValue() && depth == node.getDepth() && index == node.getIndex();
     }
 
-    public void selectAction() {
-        List<TreeNode> visited = new LinkedList<>();
-        TreeNode cur = this;
-        visited.add(this);
-        while (!cur.isLeaf()) {
-            cur = cur.select();
-            visited.add(cur);
-        }
-        cur.expand();
-        TreeNode newNode = cur.select();
-        visited.add(newNode);
-        double value = Math.random();
-        for (TreeNode node : visited) {
-            node.updateStats(value);
-        }
-    }
-
-
-    private TreeNode select() {
-        TreeNode selected = null;
-        double bestValue = Double.MIN_VALUE;
-        for (TreeNode child : children) {
-            double uctValue = child.totalValue / (child.getVisitCount() + EPSILON) +
-                    Math.sqrt(Math.log(visitCount + 1) / (child.getVisitCount() + EPSILON)) +
-                    Math.random() * EPSILON;
-            // small random number to break ties randomly in unexpanded nodes
-            if (uctValue > bestValue) {
-                selected = child;
-                bestValue = uctValue;
-            }
-        }
-        return selected;
-    }
-
-    private void updateStats(double value) {
-        visitCount++;
-        totalValue += value;
-    }
+//    public void selectAction() {
+//        List<TreeNode> visited = new LinkedList<>();
+//        TreeNode cur = this;
+//        visited.add(this);
+//        while (!cur.isLeaf()) {
+//            cur = cur.select();
+//            visited.add(cur);
+//        }
+//        cur.expand();
+//        TreeNode newNode = cur.select();
+//        visited.add(newNode);
+//        double value = Math.random();
+//        for (TreeNode node : visited) {
+//            node.updateStats(value);
+//        }
+//    }
 }
