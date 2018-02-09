@@ -1,11 +1,13 @@
 package cn.lwx.rlstg.algorithm.Common;
 
+import java.util.Objects;
+
 /**
  * Package: cn.lwx.rlstg.algorithm.QLearning
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/17
- * Modified Date: 2018/2/3
+ * Modified Date: 2018/2/9
  * Why & What is modified:
  * Version: 1.2.2
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -65,7 +67,7 @@ public class Vector2D implements Comparable<Vector2D> {
 
     @Override
     public int hashCode() {
-        return Integer.valueOf(x).hashCode() + Integer.valueOf(y).hashCode();
+        return Objects.hash(x, y);
     }
 
     @Override

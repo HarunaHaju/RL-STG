@@ -2,8 +2,10 @@ package cn.lwx.rlstg.algorithm.MCTS;
 
 import cn.lwx.rlstg.GlobalManager;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Package: cn.lwx.rlstg.algorithm.MCTS
@@ -17,12 +19,104 @@ import java.util.List;
  */
 public class TreeNode {
     private static final double EPSILON = 1e-6;
+    private static final double UCB_CONST = 0.15;
 
+    private TreeNode parentNode;
     private TreeNode[] children;
-    private double nVisits, totalValue;
 
-    private void randomSimulation(){
+    private int index;
+    private int depth;
 
+    private int visitCount;
+    private double totalValue;
+
+    public TreeNode(TreeNode parent, int index) {
+        parentNode = parent;
+        visitCount = 0;
+        totalValue = 0;
+        depth = parent.getDepth() + 1;
+        this.index = index;
+    }
+
+    public TreeNode() {
+        parentNode = null;
+        visitCount = 0;
+        totalValue = 0;
+        depth = 0;
+        index = -1;
+    }
+
+    private void expand() {
+        children = new TreeNode[GlobalManager.ACTION_COUNT];
+        for (int i = 0; i < GlobalManager.ACTION_COUNT; i++) {
+            children[i] = new TreeNode(this, i);
+        }
+    }
+
+    private void backPropagation() {
+        TreeNode cur = this;
+        while (cur != null) {
+            cur.visitCount++;
+            cur = cur.getParentNode();
+        }
+    }
+
+    private void randomSimulation() {
+
+    }
+
+    private double getUCB() {
+        if (this.isRoot())
+            return 0;
+        return totalValue / (visitCount + EPSILON)
+                + UCB_CONST * Math.sqrt(Math.log(parentNode.getVisitCount()) / (visitCount + EPSILON));
+    }
+
+    public TreeNode getParentNode() {
+        return parentNode;
+    }
+
+    public TreeNode[] getChildren() {
+        return children;
+    }
+
+    public int getVisitCount() {
+        return visitCount;
+    }
+
+    public double getTotalValue() {
+        return totalValue;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    private boolean isLeaf() {
+        return children == null;
+    }
+
+    private boolean isRoot() {
+        return index == -1;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(depth, index, totalValue, visitCount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || o.getClass() != this.getClass())
+            return false;
+        TreeNode node = (TreeNode) o;
+        return totalValue == node.getTotalValue() && depth == node.getDepth() && index == node.getIndex();
     }
 
     public void selectAction() {
@@ -42,19 +136,13 @@ public class TreeNode {
         }
     }
 
-    private void expand() {
-        children = new TreeNode[GlobalManager.ACTION_COUNT];
-        for (int i=0; i<GlobalManager.ACTION_COUNT; i++) {
-            children[i] = new TreeNode();
-        }
-    }
 
     private TreeNode select() {
         TreeNode selected = null;
         double bestValue = Double.MIN_VALUE;
         for (TreeNode child : children) {
-            double uctValue = child.totalValue / (child.nVisits + EPSILON) +
-                    Math.sqrt(Math.log(nVisits+1) / (child.nVisits + EPSILON)) +
+            double uctValue = child.totalValue / (child.getVisitCount() + EPSILON) +
+                    Math.sqrt(Math.log(visitCount + 1) / (child.getVisitCount() + EPSILON)) +
                     Math.random() * EPSILON;
             // small random number to break ties randomly in unexpanded nodes
             if (uctValue > bestValue) {
@@ -65,12 +153,8 @@ public class TreeNode {
         return selected;
     }
 
-    public boolean isLeaf() {
-        return children == null;
-    }
-
-    public void updateStats(double value) {
-        nVisits++;
+    private void updateStats(double value) {
+        visitCount++;
         totalValue += value;
     }
 }
