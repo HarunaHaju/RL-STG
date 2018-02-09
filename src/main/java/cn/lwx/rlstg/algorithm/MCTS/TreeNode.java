@@ -10,16 +10,20 @@ import java.util.List;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/24
- * Modified Date: 2018/1/24
+ * Modified Date: 2018/2/9
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class TreeNode {
-    static double epsilon = 1e-6;
+    private static final double EPSILON = 1e-6;
 
-    TreeNode[] children;
-    double nVisits, totalValue;
+    private TreeNode[] children;
+    private double nVisits, totalValue;
+
+    private void randomSimulation(){
+
+    }
 
     public void selectAction() {
         List<TreeNode> visited = new LinkedList<>();
@@ -38,7 +42,7 @@ public class TreeNode {
         }
     }
 
-    public void expand() {
+    private void expand() {
         children = new TreeNode[GlobalManager.ACTION_COUNT];
         for (int i=0; i<GlobalManager.ACTION_COUNT; i++) {
             children[i] = new TreeNode();
@@ -49,9 +53,9 @@ public class TreeNode {
         TreeNode selected = null;
         double bestValue = Double.MIN_VALUE;
         for (TreeNode child : children) {
-            double uctValue = child.totalValue / (child.nVisits + epsilon) +
-                    Math.sqrt(Math.log(nVisits+1) / (child.nVisits + epsilon)) +
-                    Math.random() * epsilon;
+            double uctValue = child.totalValue / (child.nVisits + EPSILON) +
+                    Math.sqrt(Math.log(nVisits+1) / (child.nVisits + EPSILON)) +
+                    Math.random() * EPSILON;
             // small random number to break ties randomly in unexpanded nodes
             if (uctValue > bestValue) {
                 selected = child;
