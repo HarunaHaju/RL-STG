@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
  * Comments:
  * Author: lwx
  * Create Date: 2017/12/18
- * Modified Date: 2018/2/3
+ * Modified Date: 2018/2/10
  * Why & What is modified:
  * Version: 1.2.2
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -25,7 +25,7 @@ public class Player extends CommonObjects {
     private static final int SHOT_SPAN = 15;//shot 1 time per 15 frames
     private int shotCount = 0;
 
-    private static final int MOVE_SPAN = 5;//move may change per 5 frames
+    public static final int MOVE_SPAN = 5;//move may change per 5 frames
     private int moveCount = 0;
 
     public Player() {
