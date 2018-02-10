@@ -16,18 +16,29 @@ import java.util.ArrayList;
  */
 public class MState {
     private ArrayList<Vector2D> bullets;
+    private Vector2D playerPosition;
 
-    public MState(ArrayList<Vector2D> bulletDeltaVectors) {
+    public MState(ArrayList<Vector2D> bulletDeltaVectors, Vector2D pos) {
         bullets = new ArrayList<>();
         bullets = bulletDeltaVectors;
+        playerPosition = pos;
     }
 
     public MState() {
         bullets = new ArrayList<>();
+        playerPosition = new Vector2D();
+    }
+
+    public ArrayList<Vector2D> getBullets() {
+        return bullets;
     }
 
     public ArrayList<Vector2D> getLists() {
         return bullets;
+    }
+
+    public Vector2D getPlayerPosition() {
+        return playerPosition;
     }
 
     @Override
