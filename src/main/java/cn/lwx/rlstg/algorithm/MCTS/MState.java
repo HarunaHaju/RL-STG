@@ -15,25 +15,24 @@ import java.util.ArrayList;
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class MState {
-    private ArrayList<ArrayList<Vector2D>> lists;
+    private ArrayList<Vector2D> bullets;
 
-    public MState(ArrayList<Vector2D> bulletDeltaVectors, ArrayList<Vector2D> enemyDeltaVectors) {
-        lists = new ArrayList<>();
-        lists.add(bulletDeltaVectors);
-        lists.add(enemyDeltaVectors);
+    public MState(ArrayList<Vector2D> bulletDeltaVectors) {
+        bullets = new ArrayList<>();
+        bullets = bulletDeltaVectors;
     }
 
     public MState() {
-        lists = new ArrayList<>();
+        bullets = new ArrayList<>();
     }
 
-    private ArrayList<ArrayList<Vector2D>> getLists() {
-        return lists;
+    public ArrayList<Vector2D> getLists() {
+        return bullets;
     }
 
     @Override
     public int hashCode() {
-        return lists != null ? lists.hashCode() : 0;
+        return bullets != null ? bullets.hashCode() : 0;
     }
 
     @Override
@@ -43,6 +42,6 @@ public class MState {
         if (this == o)
             return true;
         MState state = (MState) o;
-        return (lists.equals(state.getLists()));
+        return (bullets.equals(state.getLists()));
     }
 }
