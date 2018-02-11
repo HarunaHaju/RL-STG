@@ -9,12 +9,13 @@ import java.util.*;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/24
- * Modified Date: 2018/2/9
+ * Modified Date: 2018/2/11
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class TreeNode {
+    //hyper parameters
     private static final double EPSILON = 1e-6;
     private static final double UCB_CONST = 0.15;
 
@@ -23,9 +24,11 @@ public class TreeNode {
 
     private int index;
     private int depth;
-
     private int visitCount;
     private double totalValue;
+
+    private MState state;
+    private boolean canExpand;
 
     public TreeNode(TreeNode parent, int index) {
         parentNode = parent;
@@ -33,6 +36,7 @@ public class TreeNode {
         totalValue = 0;
         depth = parent.getDepth() + 1;
         this.index = index;
+        canExpand = true;
     }
 
     public TreeNode() {
@@ -41,6 +45,7 @@ public class TreeNode {
         totalValue = 0;
         depth = 0;
         index = -1;
+        canExpand = true;
     }
 
     private void expand() {
@@ -50,8 +55,21 @@ public class TreeNode {
         }
     }
 
-    private void randomSimulation() {
-
+    private void randomSimulation(int action) {
+        if (this.canExpand) {
+            MState nextState = MTool.getSimulateResult(this.state, action);
+            if (nextState != null){
+                if (this.children == null) {
+                    this.expand();
+                }
+                this.children[action].setState(nextState);
+                double value = Math.random();
+                for (TreeNode child : children){
+                    child.totalValue += value;
+                }
+            }
+        }
+        this.backPropagation();
     }
 
     private void backPropagation() {
@@ -81,27 +99,27 @@ public class TreeNode {
                 + UCB_CONST * Math.sqrt(Math.log(parentNode.getVisitCount()) / (visitCount + EPSILON));
     }
 
-    public TreeNode getParentNode() {
+    private TreeNode getParentNode() {
         return parentNode;
     }
 
-    public TreeNode[] getChildren() {
+    private TreeNode[] getChildren() {
         return children;
     }
 
-    public int getVisitCount() {
+    private int getVisitCount() {
         return visitCount;
     }
 
-    public double getTotalValue() {
+    private double getTotalValue() {
         return totalValue;
     }
 
-    public int getIndex() {
+    private int getIndex() {
         return index;
     }
 
-    public int getDepth() {
+    private int getDepth() {
         return depth;
     }
 
@@ -111,6 +129,14 @@ public class TreeNode {
 
     private boolean isRoot() {
         return index == -1;
+    }
+
+    public MState getState() {
+        return state;
+    }
+
+    public void setState(MState state) {
+        this.state = state;
     }
 
     @Override
