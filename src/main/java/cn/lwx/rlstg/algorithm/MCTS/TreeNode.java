@@ -80,7 +80,7 @@ public class TreeNode {
         }
     }
 
-    private int selectAction() {
+    public int selectAction() {
         int bestIndex = -1;
         double maxValue = Double.MIN_VALUE;
         for (TreeNode node : children) {
