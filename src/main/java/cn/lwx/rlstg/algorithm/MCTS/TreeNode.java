@@ -61,14 +61,21 @@ public class TreeNode {
             if (this.children == null) {
                 this.expand();
             }
-            MState nextState = MTool.getSimulateResult(this.state, action);
-            if (nextState != null) {
-                this.children[action].setState(nextState);
-                double value = Math.random();
-                this.children[action].totalValue += value;
+            if (this.children[action].getVisitCount() > 0) {
+                if(this.children[action].canExpand)
+                    this.children[action].totalValue += Math.random();
+                else
+                    this.children[action].totalValue += -100;
             } else {
-                this.children[action].setCanExpand(false);
-                this.children[action].totalValue += -100;
+                MState nextState = MTool.getSimulateResult(this.state, action);
+                if (nextState != null) {
+                    this.children[action].setState(nextState);
+                    double value = Math.random();
+                    this.children[action].totalValue += value;
+                } else {
+                    this.children[action].setCanExpand(false);
+                    this.children[action].totalValue += -100;
+                }
             }
         }
         return this.children[action];

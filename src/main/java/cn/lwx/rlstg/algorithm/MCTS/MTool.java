@@ -80,8 +80,9 @@ public class MTool {
     }
 
     public static boolean judgeGetShot(Vector2D player, Vector2D bullet) {
+        if (GlobalManager.GLOBAL_MANAGER.getBullets().size() <= 0)
+            return false;
         boolean isShot = false;
-
         //the judging condition is same as CommonObjects.java
         if (bullet.getX() + GlobalManager.GLOBAL_MANAGER.getBullets().peek().getWidth()
                 >= player.getX() + GlobalManager.GLOBAL_MANAGER.getPlayer().getWidth() / 4 &&
