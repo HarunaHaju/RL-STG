@@ -11,7 +11,7 @@ Play STG with Reinforcement Learning
 # Configuration  
 
 Add those code into your pom.xml  
-<pre>
+'''HTML
                 <dependencies>
                         <dependency>
                                 <groupId>org.encog</groupId>
@@ -19,4 +19,4 @@ Add those code into your pom.xml
                                 <version>3.4</version>
                         </dependency>
                 </dependencies>
- </pre>
+'''
