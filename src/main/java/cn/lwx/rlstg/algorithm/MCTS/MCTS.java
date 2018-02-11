@@ -13,12 +13,14 @@ import java.util.Collections;
  * Comments:
  * Author: lwx
  * Create Date: 2018/2/5
- * Modified Date: 2018/2/5
+ * Modified Date: 2018/2/11
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
  */
 public class MCTS extends Controller {
+    //hyper parameters
+    private static final int TIME_LIMIT = 14;
 
     private MState state;
 
@@ -28,7 +30,16 @@ public class MCTS extends Controller {
 
     @Override
     public int decide() {
-        return 0;
+        MTool.setIterationCount(0);
+        long startTime = System.currentTimeMillis();
+        long timer = System.currentTimeMillis() - startTime;
+        TreeNode root = new TreeNode();
+        root.setState(state);
+        while (timer <= TIME_LIMIT) {
+            MTool.randomExpand(root);
+            timer = System.currentTimeMillis() - startTime;
+        }
+        return root.selectAction();
     }
 
     public void updateState() {

@@ -5,7 +5,7 @@ package cn.lwx.rlstg.algorithm;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/23
- * Modified Date: 2018/2/5
+ * Modified Date: 2018/2/11
  * Why & What is modified:
  * Version: 1.2.2
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -37,6 +37,8 @@ public abstract class Controller {
                 return "Live First (Rule Based)";
             case ALGORITHM_QNETWORK:
                 return "Q-Network";
+            case ALGORITHM_MCTS:
+                return "MCTS";
             default:
                 return "null";
         }

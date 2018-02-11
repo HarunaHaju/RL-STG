@@ -18,6 +18,7 @@ public class TreeNode {
     //hyper parameters
     private static final double EPSILON = 1e-6;
     private static final double UCB_CONST = 0.15;
+    public static final int MAX_DEPTH = 6;
 
     private TreeNode parentNode;
     private TreeNode[] children;
@@ -48,34 +49,36 @@ public class TreeNode {
         canExpand = true;
     }
 
-    private void expand() {
+    public void expand() {
         children = new TreeNode[GlobalManager.ACTION_COUNT];
         for (int i = 0; i < GlobalManager.ACTION_COUNT; i++) {
             children[i] = new TreeNode(this, i);
         }
     }
 
-    private void randomSimulation(int action) {
+    public TreeNode randomSimulation(int action) {
         if (this.canExpand) {
+            if (this.children == null) {
+                this.expand();
+            }
             MState nextState = MTool.getSimulateResult(this.state, action);
-            if (nextState != null){
-                if (this.children == null) {
-                    this.expand();
-                }
+            if (nextState != null) {
                 this.children[action].setState(nextState);
                 double value = Math.random();
-                for (TreeNode child : children){
-                    child.totalValue += value;
-                }
+                this.children[action].totalValue += value;
+            } else {
+                this.children[action].setCanExpand(false);
+                this.children[action].totalValue += -100;
             }
         }
-        this.backPropagation();
+        return this.children[action];
     }
 
-    private void backPropagation() {
-        TreeNode cur = this;
+    public void backPropagation() {
+        TreeNode cur = this.getParentNode();
         while (cur != null) {
             cur.visitCount++;
+            cur.totalValue += this.totalValue;
             cur = cur.getParentNode();
         }
     }
@@ -84,7 +87,7 @@ public class TreeNode {
         int bestIndex = -1;
         double maxValue = Double.MIN_VALUE;
         for (TreeNode node : children) {
-            if(node.getUCB() > maxValue){
+            if (node.getUCB() > maxValue) {
                 maxValue = node.getUCB();
                 bestIndex = node.getIndex();
             }
@@ -92,26 +95,26 @@ public class TreeNode {
         return bestIndex;
     }
 
-    private double getUCB() {
+    public double getUCB() {
         if (this.isRoot())
             return 0;
         return totalValue / (visitCount + EPSILON)
-                + UCB_CONST * Math.sqrt(Math.log(parentNode.getVisitCount()) / (visitCount + EPSILON));
+                + UCB_CONST * Math.sqrt(2 * Math.log(MTool.getIterationCount()) / (visitCount + EPSILON));
     }
 
     private TreeNode getParentNode() {
         return parentNode;
     }
 
-    private TreeNode[] getChildren() {
+    public TreeNode[] getChildren() {
         return children;
     }
 
-    private int getVisitCount() {
+    public int getVisitCount() {
         return visitCount;
     }
 
-    private double getTotalValue() {
+    public double getTotalValue() {
         return totalValue;
     }
 
@@ -119,8 +122,16 @@ public class TreeNode {
         return index;
     }
 
-    private int getDepth() {
+    public int getDepth() {
         return depth;
+    }
+
+    public boolean isCanExpand() {
+        return canExpand;
+    }
+
+    public void setCanExpand(boolean canExpand) {
+        this.canExpand = canExpand;
     }
 
     private boolean isLeaf() {
@@ -153,21 +164,4 @@ public class TreeNode {
         TreeNode node = (TreeNode) o;
         return totalValue == node.getTotalValue() && depth == node.getDepth() && index == node.getIndex();
     }
-
-//    public void selectAction() {
-//        List<TreeNode> visited = new LinkedList<>();
-//        TreeNode cur = this;
-//        visited.add(this);
-//        while (!cur.isLeaf()) {
-//            cur = cur.select();
-//            visited.add(cur);
-//        }
-//        cur.expand();
-//        TreeNode newNode = cur.select();
-//        visited.add(newNode);
-//        double value = Math.random();
-//        for (TreeNode node : visited) {
-//            node.updateStats(value);
-//        }
-//    }
 }

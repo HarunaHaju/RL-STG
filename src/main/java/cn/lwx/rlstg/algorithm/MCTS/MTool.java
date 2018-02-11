@@ -2,6 +2,7 @@ package cn.lwx.rlstg.algorithm.MCTS;
 
 import cn.lwx.rlstg.GlobalManager;
 import cn.lwx.rlstg.algorithm.Common.Vector2D;
+import cn.lwx.rlstg.algorithm.Controller;
 import cn.lwx.rlstg.gameobjects.Player;
 
 import java.util.ArrayList;
@@ -20,10 +21,13 @@ public class MTool {
     private static final int SPEED = GlobalManager.GLOBAL_MANAGER.getPlayer().getSpeed();
     private static final int BULLET_SPEED = GlobalManager.GLOBAL_MANAGER.getEnemies().peek().getBulletSpeed();
 
+    private static int iterationCount = 0;
+
     //return next state, null means lose
     public static MState getSimulateResult(MState state, int action) {
         ArrayList<Vector2D> playerRoute = new ArrayList<>();//the route of player;
         ArrayList<Vector2D> bulletRoute = new ArrayList<>();
+        Vector2D playerPos = new Vector2D();
         int deltaX = 0;
         int deltaY = 0;
         switch (action) {
@@ -59,22 +63,20 @@ public class MTool {
                 posY = 480;
             }
 
-            playerRoute.add(new Vector2D(posX, posY));
+            playerPos = new Vector2D(posX, posY);
             for (int j = 0; j < state.getBullets().size(); j++) {
-                bulletRoute.add(new Vector2D(state.getBullets().get(i).getX()
-                        , state.getBullets().get(i).getY() + i * BULLET_SPEED));
-            }
-        }
-
-        //judge get shot
-        for (int i = 0; i < playerRoute.size(); i++) {
-            for (int j = 0; j < state.getBullets().size(); j++) {
-                if (judgeGetShot(playerRoute.get(i), bulletRoute.get(j)))
+                if (judgeGetShot(playerPos, new Vector2D(state.getBullets().get(j).getX()
+                        , state.getBullets().get(j).getY() + i * BULLET_SPEED)))
                     return null;
             }
         }
 
-        return new MState(bulletRoute, playerRoute.get(Player.MOVE_SPAN - 1));
+        for (int j = 0; j < state.getBullets().size(); j++) {
+            bulletRoute.add(new Vector2D(state.getBullets().get(j).getX()
+                    , state.getBullets().get(j).getY() + (Player.MOVE_SPAN - 1) * BULLET_SPEED));
+        }
+
+        return new MState(bulletRoute, playerPos);
     }
 
     public static boolean judgeGetShot(Vector2D player, Vector2D bullet) {
@@ -91,5 +93,26 @@ public class MTool {
         }
 
         return isShot;
+    }
+
+    public static void randomExpand(TreeNode root) {
+        iterationCount++;
+        if (root.getChildren() == null) {
+            root.expand();
+        }
+        TreeNode cur = root;
+        while (cur.getDepth() < TreeNode.MAX_DEPTH && cur.isCanExpand()) {
+            int action = (int) (Math.random() * GlobalManager.ACTION_COUNT);
+            cur = cur.randomSimulation(action);
+        }
+        cur.backPropagation();
+    }
+
+    public static int getIterationCount() {
+        return iterationCount;
+    }
+
+    public static void setIterationCount(int iterationCount) {
+        MTool.iterationCount = iterationCount;
     }
 }
