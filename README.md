@@ -10,13 +10,4 @@ Play STG with Reinforcement Learning
 
 # Configuration  
 
-Add those code into your pom.xml  
-'''HTML
-                <dependencies>
-                        <dependency>
-                                <groupId>org.encog</groupId>
-                                <artifactId>encog-core</artifactId>
-                                <version>3.4</version>
-                        </dependency>
-                </dependencies>
-'''
+Add Encog dependency in your dependencies into your pom.xml
