@@ -11,11 +11,11 @@ Play STG with Reinforcement Learning
 # Configuration  
 
 Add those code into your pom.xml  
-'<dependencies>
+<pre><dependencies>
         <!-- https://mvnrepository.com/artifact/org.encog/encog-core -->
         <dependency>
             <groupId>org.encog</groupId>
             <artifactId>encog-core</artifactId>
             <version>3.4</version>
         </dependency>
- </dependencies>'
+ </dependencies></pre>
