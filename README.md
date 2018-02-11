@@ -8,3 +8,6 @@ Play STG with Reinforcement Learning
 - Encog 3.0 or later version  
 - Maven 2 or later version
 
+# Configuration  
+
+Add Encog dependency in your dependencies into your pom.xml
