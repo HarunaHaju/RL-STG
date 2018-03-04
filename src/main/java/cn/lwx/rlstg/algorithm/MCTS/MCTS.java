@@ -39,11 +39,6 @@ public class MCTS extends Controller {
             MTool.randomExpand(root);
             timer = System.currentTimeMillis() - startTime;
         }
-        for (int i = 0; i < 5; i++) {
-            System.out.print(root.getChildren()[i].getVisitCount() + " ");
-        }
-        System.out.print(root.selectAction());
-        System.out.println("");
         return root.selectAction();
     }
 
