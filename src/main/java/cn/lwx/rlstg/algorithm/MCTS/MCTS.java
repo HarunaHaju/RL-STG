@@ -13,7 +13,7 @@ import java.util.Collections;
  * Comments:
  * Author: lwx
  * Create Date: 2018/2/5
- * Modified Date: 2018/2/11
+ * Modified Date: 2018/3/04
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -40,8 +40,9 @@ public class MCTS extends Controller {
             timer = System.currentTimeMillis() - startTime;
         }
         for (int i = 0; i < 5; i++) {
-            System.out.print(root.getChildren()[i].getUCB() + " ");
+            System.out.print(root.getChildren()[i].getVisitCount() + " ");
         }
+        System.out.print(root.selectAction());
         System.out.println("");
         return root.selectAction();
     }

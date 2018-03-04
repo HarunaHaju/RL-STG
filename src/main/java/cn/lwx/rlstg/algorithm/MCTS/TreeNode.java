@@ -9,7 +9,7 @@ import java.util.*;
  * Comments:
  * Author: lwx
  * Create Date: 2018/1/24
- * Modified Date: 2018/2/11
+ * Modified Date: 2018/3/04
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -17,8 +17,8 @@ import java.util.*;
 public class TreeNode {
     //hyper parameters
     private static final double EPSILON = 1e-6;
-    private static final double UCB_CONST = 0.15;
-    public static final int MAX_DEPTH = 6;
+    public static final int MAX_DEPTH = 5;
+    private static final double UCB_CONST = 3;
 
     private TreeNode parentNode;
     private TreeNode[] children;
@@ -26,7 +26,8 @@ public class TreeNode {
     private int index;
     private int depth;
     private int visitCount;
-    private double totalValue;
+    private double winCount;
+    private int bpReward;//used in backPropagation(), 0 means lose, 1 means win
 
     private MState state;
     private boolean canExpand;
@@ -34,19 +35,21 @@ public class TreeNode {
     public TreeNode(TreeNode parent, int index) {
         parentNode = parent;
         visitCount = 0;
-        totalValue = 0;
         depth = parent.getDepth() + 1;
         this.index = index;
         canExpand = true;
+        winCount = 0;
+        bpReward = -1;
     }
 
     public TreeNode() {
         parentNode = null;
         visitCount = 0;
-        totalValue = 0;
         depth = 0;
         index = -1;
         canExpand = true;
+        winCount = 0;
+        bpReward = -1;
     }
 
     public void expand() {
@@ -62,20 +65,24 @@ public class TreeNode {
                 this.expand();
             }
             if (this.children[action].getVisitCount() > 0) {
-                if(this.children[action].canExpand)
-                    this.children[action].totalValue += Math.random();
-                else
-                    this.children[action].totalValue += -100;
+                if(this.children[action].canExpand) {
+                    this.children[action].winCount++;
+                    this.children[action].bpReward = 1;
+                } else {
+                    this.children[action].bpReward = 0;
+                }
+                this.children[action].visitCount++;
             } else {
                 MState nextState = MTool.getSimulateResult(this.state, action);
                 if (nextState != null) {
                     this.children[action].setState(nextState);
-                    double value = Math.random();
-                    this.children[action].totalValue += value;
+                    this.children[action].winCount++;
+                    this.children[action].bpReward = 1;
                 } else {
                     this.children[action].setCanExpand(false);
-                    this.children[action].totalValue += -100;
+                    this.children[action].bpReward = 0;
                 }
+                this.children[action].visitCount++;
             }
         }
         return this.children[action];
@@ -85,7 +92,7 @@ public class TreeNode {
         TreeNode cur = this.getParentNode();
         while (cur != null) {
             cur.visitCount++;
-            cur.totalValue += this.totalValue;
+            cur.winCount += this.bpReward;
             cur = cur.getParentNode();
         }
     }
@@ -94,7 +101,7 @@ public class TreeNode {
         int bestIndex = -1;
         double maxValue = Double.MIN_VALUE;
         for (TreeNode node : children) {
-            if (node.getUCB() > maxValue) {
+            if (node.getUCB() >= maxValue) {
                 maxValue = node.getUCB();
                 bestIndex = node.getIndex();
             }
@@ -105,8 +112,8 @@ public class TreeNode {
     public double getUCB() {
         if (this.isRoot())
             return 0;
-        return totalValue / (visitCount + EPSILON)
-                + UCB_CONST * Math.sqrt(2 * Math.log(MTool.getIterationCount()) / (visitCount + EPSILON));
+        return winCount / (visitCount + EPSILON)
+                + UCB_CONST * Math.sqrt(Math.log(MTool.getIterationCount()) / (visitCount + EPSILON));
     }
 
     private TreeNode getParentNode() {
@@ -121,16 +128,16 @@ public class TreeNode {
         return visitCount;
     }
 
-    public double getTotalValue() {
-        return totalValue;
-    }
-
     private int getIndex() {
         return index;
     }
 
     public int getDepth() {
         return depth;
+    }
+
+    public double getWinCount() {
+        return winCount;
     }
 
     public boolean isCanExpand() {
@@ -159,7 +166,7 @@ public class TreeNode {
 
     @Override
     public int hashCode() {
-        return Objects.hash(depth, index, totalValue, visitCount);
+        return Objects.hash(depth, index, winCount, visitCount);
     }
 
     @Override
@@ -169,6 +176,6 @@ public class TreeNode {
         if (o == null || o.getClass() != this.getClass())
             return false;
         TreeNode node = (TreeNode) o;
-        return totalValue == node.getTotalValue() && depth == node.getDepth() && index == node.getIndex();
+        return winCount == node.getWinCount() && depth == node.getDepth() && index == node.getIndex();
     }
 }

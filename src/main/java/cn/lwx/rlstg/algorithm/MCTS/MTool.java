@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Comments:
  * Author: lwx
  * Create Date: 2018/2/10
- * Modified Date: 2018/2/11
+ * Modified Date: 2018/3/04
  * Why & What is modified:
  * Version: 0.0.1beta
  * It's the only NEET thing to do. – Shionji Yuuko
@@ -25,7 +25,6 @@ public class MTool {
 
     //return next state, null means lose
     public static MState getSimulateResult(MState state, int action) {
-        ArrayList<Vector2D> playerRoute = new ArrayList<>();//the route of player;
         ArrayList<Vector2D> bulletRoute = new ArrayList<>();
         Vector2D playerPos = new Vector2D();
         int deltaX = 0;
@@ -102,11 +101,13 @@ public class MTool {
             root.expand();
         }
         TreeNode cur = root;
-        while (cur.getDepth() < TreeNode.MAX_DEPTH && cur.isCanExpand()) {
-            int action = (int) (Math.random() * GlobalManager.ACTION_COUNT);
+        int action = 0;
+        while (cur != null && cur.getDepth() < TreeNode.MAX_DEPTH && cur.isCanExpand()) {
+            action = (int)(Math.random() * GlobalManager.ACTION_COUNT);
             cur = cur.randomSimulation(action);
         }
-        cur.backPropagation();
+        if(cur != null)
+            cur.backPropagation();
     }
 
     public static int getIterationCount() {
